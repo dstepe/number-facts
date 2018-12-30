@@ -11,13 +11,28 @@ namespace App\MiamiOH;
 
 class NumberFact
 {
+    /**
+     * @var int
+     */
+    private $number;
+    /**
+     * @var string
+     */
+    private $string;
+
+    public function __construct(int $number, string $string)
+    {
+        $this->number = $number;
+        $this->string = $string;
+    }
+
     public function number(): int
     {
-        return 5;
+        return $this->number;
     }
 
     public function string(): string
     {
-        return '5 is the number of platonic solids.';
+        return $this->string;
     }
 }

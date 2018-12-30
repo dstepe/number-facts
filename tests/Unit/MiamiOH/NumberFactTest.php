@@ -9,22 +9,28 @@
 namespace Tests\Unit\MiamiOH;
 
 use App\MiamiOH\NumberFact;
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 
 class NumberFactTest extends TestCase
 {
 
+    /** @var NumberFact */
+    private $fact;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->fact = new NumberFact(5, '5 is the number of platonic solids.');
+    }
+
     public function testReturnsNumberAssociatedWithFact(): void
     {
-        $fact = new NumberFact();
-
-        $this->assertEquals(5, $fact->number());
+        $this->assertEquals(5, $this->fact->number());
     }
 
     public function testReturnsStringAssociatedWithFact(): void
     {
-        $fact = new NumberFact();
-
-        $this->assertEquals('5 is the number of platonic solids.', $fact->string());
+        $this->assertEquals('5 is the number of platonic solids.', $this->fact->string());
     }
 }
