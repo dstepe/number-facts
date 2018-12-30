@@ -21,16 +21,18 @@ In addition to the overall product vision, the product owner has developed an in
 
 | ID   | User Story | Acceptance Criteria |
 | ---- | ---------- | ------------------- |
-| NF-1 | As a visitor, I should see a number fact when I visit the home page. | A number and associated fact are presented on the home page. |
-| NF-2 | As a visitor, I should see a date fact when I visit the home page. | A date and associated fact are presented on the home page. |
-| NF-3 | As a visitor, I want to see a fact for a number I enter. | The visitor can enter a number and a fact for that number is displayed. |
-| NF-4 | As a visitor, I want to see a fact for a date I enter. | The visitor can enter a date and a fact for that date is displayed. |
+| NF-01 | As a visitor, I should see a number fact when I visit the home page. | A number and associated fact are presented on the home page. |
+| NF-02 | As a visitor, I should see a date fact when I visit the home page. | A date and associated fact are presented on the home page. |
+| NF-03 | As a visitor, I want to see a fact for a number I enter. | The visitor can enter a number and a fact for that number is displayed. |
+| NF-04 | As a visitor, I want to see a fact for a date I enter. | The visitor can enter a date and a fact for that date is displayed. |
 
 That's it for our initial stories. While these may seem simple, there are a number of design decisions hiding in these stories.
 
-Programmers tend to look for challenges and we must work hard to cultivate a disciplined approach to our work. The first order of business is not to jump into NF-1 and write lots of code to fetch facts from numbersapi.com. You should notice that NF-1 does not mentioned numberfacts.com at all, or even specify that a random number fact is displayed. The team crafted the story this way intentionally. Our first goal is to establish a functional baseline covered by tests which will allow us to build the features described in the stories.
+Programmers tend to look for challenges and we must work hard to cultivate a disciplined approach to our work. The first order of business is not to jump into NF-01 and write lots of code to fetch facts from numbersapi.com. You should notice that NF-01 does not mentioned numberfacts.com at all, or even specify that a random number fact is displayed. The team crafted the story this way intentionally. Our first goal is to establish a functional baseline covered by tests which will allow us to build the features described in the stories.
 
-## Project Setup (NF-Base)
+## Project Setup
+
+Starting Tag 0.0.0
 
 We already have a new Laravel application for our project. Our next step is to add our own build and deploy tools. This project is not intended to cover the details of those tools. We are adding:
 
@@ -46,3 +48,11 @@ You can refer to the git history to see the specific changes.
 You should also set up your own local environment so you can run the feature and unit tests provided with the default Laravel application. Remember, the goal is to establish a baseline with the tests passing and the application working.
 
 Note that with no source code to actually analyze, the pipeline may fail at this time.
+
+## The First User Story
+
+Starting Tag 0.1.0
+
+Now that we have a known good startig point, we will begin implementing the feature described in story NF-01, "As a visitor, I should see a number fact when I visit the home page." This seems simple and it's very tempting to do far more work than necessary. Remember the acceptance criteria is simply "A number and associated fact are presented on the home page." We very intentionally left out the words "random" and "from numberfacts.com" in keeping with the INVEST (https://www.agilealliance.org/glossary/invest) criteria. The primary value of this story will be a product the stakeholders can react to, not final feature set.
+
+We can now create a feature test which will demonstrate this functionality and ensure we continue providing this feature as development progresses. We will create a new feature test for the default home route that looks for the number 42 and the associated math fact "5 is the number of platonic solids." We selected this from the numberfacts.com site for testing purposes.
