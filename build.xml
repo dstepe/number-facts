@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="NumberFacts">
+
+    <property name="release_file" value="${package}-${version}-${release}.${build}"/>
+    <property name="builddir" value="${basedir}/build"/>
+    <property name="composer" value="${builddir}/composer.phar"/>
+
+    <target name="release" description="Build distribution">
+        <delete dir="${basedir}/dist" />
+        <mkdir dir="${basedir}/dist" />
+
+        <copy todir="${basedir}/dist">
+            <fileset dir="${basedir}">
+                <include name="app/**" />
+                <include name="bootstrap/**" />
+                <exclude name="bootstrap/cache/**" />
+                <include name="config/**" />
+                <include name="database/**" />
+                <include name="public/**" />
+                <include name="resources/**" />
+                <include name="routes/**" />
+                <include name="artisan" />
+                <include name="server.php" />
+                <include name="composer.json" />
+            </fileset>
+        </copy>
+
+        <copy todir="${basedir}/dist/vendor">
+            <fileset dir="${basedir}/vendor"/>
+        </copy>
+
+        <delete>
+            <fileset dir="." includes="*.tar.gz" />
+        </delete>
+
+        <tar destfile="${release_file}.tar.gz" compression="gzip" longfile="gnu">
+            <tarfileset dir="dist" />
+        </tar>
+
+    </target>
+
+    <target name="php-check">
+        <condition property="php" value="php">
+            <not>
+                <isset property="${php}"/>
+            </not>
+        </condition>
+    </target>
+
+    <target name="composer-clean" description="Cleanup composer dependencies">
+        <delete dir="${basedir}/vendor" />
+        <delete file="${basedir}/composer.lock" />
+
+    </target>
+
+    <target name="composer-prepare">
+        <mkdir dir="${builddir}" />
+    </target>
+
+    <target name="composer-check" depends="composer-prepare">
+        <available file="${composer}" property="composer.present"/>
+    </target>
+
+    <target name="composer-download" depends="composer-check" unless="composer.present">
+        <property name="composer.noselfupdate" value="true"/>
+        <get src="https://getcomposer.org/composer.phar" dest="${composer}"/>
+    </target>
+
+    <target name="composer-selfupdate" depends="php-check,composer-download" unless="composer.noselfupdate">
+        <exec executable="${php}">
+            <arg value="${composer}"/>
+            <arg value="self-update"/>
+            <arg value="--quiet"/>
+        </exec>
+    </target>
+
+    <target name="composer" depends="composer-selfupdate" unless="composer.noupdate" description="Run composer update">
+        <exec executable="${php}">
+            <arg value="${composer}"/>
+            <arg value="update"/>
+        </exec>
+    </target>
+
+    <target name="composer-nodev" depends="composer-selfupdate" description="Install non-dev dependencies with Composer">
+        <exec executable="${php}">
+            <arg value="${composer}"/>
+            <arg value="install" />
+            <arg value="--no-dev" />
+        </exec>
+    </target>
+
+</project>
