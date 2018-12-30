@@ -74,3 +74,7 @@ Our refactoring results in base view and a much simpler view for the home page. 
 Starting Tag 0.2.0
 
 The hardcoded number and fact is useful for producing something for stakeholders for review, but it doesn't help the development team understand how the application will work. Our next step will be to drive the static values deeper into the framework, working our way toward Domain Objects. We will begin by creating a controller for the home route (tag 0.2.1) and moving the static data from the view into variables provided by the controller method (tag 0.2.2). We run the feature test after each step to ensure nothing is broken.
+
+Success! We have moved the hard coded data from the view into a controller method without breaking the feature. In doing so, we discover that our first domain object will represent a NumberFact and contain a number and fact. (Ok, we probably knew that already, but you get the point.) Now we can create that class using unit tests.
+
+Our first attempt does the minimum necessary to make our new class return our static sample data while passing unit tests (tag 0.2.3).
