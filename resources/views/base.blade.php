@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>@yield('title')</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
@@ -81,11 +81,10 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Number Facts
+                    @yield('title')
                 </div>
 
-                <p>Fact for the number 5.</p>
-                <p>5 is the number of platonic solids.</p>
+                @yield('body')
             </div>
         </div>
     </body>

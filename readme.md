@@ -59,4 +59,12 @@ We can now create a feature test which will demonstrate this functionality and e
 
 As expected, the test fails because the expected text is not found. We will address that by hardcoding the number and fact into the view. Remember, the practice of TDD requires the minimal amount of work necessary to make the test pass. In this case, there is no requirement for more than hardcoding in the view. This obviously won't be the final solution, but we don't know more than that right now.
 
-And just like that, our feature test passes and we have a potentially shippable product which can be shown to stakeholders. 
+And just like that, our feature test passes and we have a potentially shippable product which can be shown to stakeholders. (Review tag 0.1.2 for details.)
+
+## Our First Refactoring
+
+Starting Tag 0.1.2
+
+We can foresee problems with the current view implementation and decide to tackle that now. We have a single view which includes all markup and we want to create a base view to make managing changes easier. It's time to refactor. Remember that refactoring is not "this is not working correctly, so let's change it." Refactoring is the process of taking code covered by tests and making it better, using the tests to ensure it continues producing the correct results. Refactoring should not result in changes to existing tests.
+
+Our refactoring results in base view and a much simpler view for the home page. We had to update the home route as well. The feature test for NF-01 continues to pass, though, which tells us our refactoring did not break anything. (Review tag 0.2.0 for detaisl.)
