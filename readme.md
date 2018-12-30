@@ -30,3 +30,19 @@ That's it for our initial stories. While these may seem simple, there are a numb
 
 Programmers tend to look for challenges and we must work hard to cultivate a disciplined approach to our work. The first order of business is not to jump into NF-1 and write lots of code to fetch facts from numbersapi.com. You should notice that NF-1 does not mentioned numberfacts.com at all, or even specify that a random number fact is displayed. The team crafted the story this way intentionally. Our first goal is to establish a functional baseline covered by tests which will allow us to build the features described in the stories.
 
+## Project Setup (NF-Base)
+
+We already have a new Laravel application for our project. Our next step is to add our own build and deploy tools. This project is not intended to cover the details of those tools. We are adding:
+
+* build.xml
+* .gitlab-ci.yml
+
+And updating:
+
+* phpunit.xml
+
+You can refer to the git history to see the specific changes.
+
+You should also set up your own local environment so you can run the feature and unit tests provided with the default Laravel application. Remember, the goal is to establish a baseline with the tests passing and the application working.
+
+Note that with no source code to actually analyze, the pipeline may fail at this time.

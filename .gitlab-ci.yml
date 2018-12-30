@@ -1,0 +1,155 @@
+variables:
+  UNIT_TESTS_PATH: tests/Unit
+  FEATURE_TESTS_PATH: tests/Feature
+  APP_SOURCE_PATH: app/MiamiOH
+  MINIMUM_COVERAGE_PERCENT: 85
+  MAXIMUM_CRAP_SCORE: 30
+  APP_SPEC_FILE: app.spec
+  DEPLOY_HOSTGROUP: Server/PHP/Admin/Web
+
+stages:
+  - test
+  - analyze
+  - review
+  - prepare
+  - build
+  - deploy
+  - apply
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - vendor/
+
+before_script:
+  - composer install --quiet
+
+unit:
+  stage: test
+  image: miamioh/php:7.2-phpunit
+  script:
+    - run $UNIT_TESTS_PATH
+
+coverage:
+  stage: analyze
+  image: miamioh/php:7.2-phpunit-coverage
+  script:
+    - run $UNIT_TESTS_PATH
+  artifacts:
+    paths:
+      - coverage
+      - clover.xml
+    reports:
+      junit: coverage/phpunit.junit.xml
+    expire_in: 1 week
+
+phpcsfixer:
+  stage: analyze
+  image: miamioh/php:7.2-php-cs-fixer
+  script:
+    - run $APP_SOURCE_PATH
+  allow_failure: true
+
+phpstan:
+  stage: analyze
+  image: miamioh/php:7.2-phpstan
+  script:
+    - run $APP_SOURCE_PATH
+  allow_failure: true
+
+quality:
+  stage: review
+  image: miamioh/php:coverage
+  script:
+    - run -p $MINIMUM_COVERAGE_PERCENT -s $MAXIMUM_CRAP_SCORE
+  dependencies:
+    - coverage
+
+feature:
+  stage: review
+  image: miamioh/php:7.2-phpunit
+  script:
+    - run $FEATURE_TESTS_PATH
+
+prepare:
+  stage: prepare
+  image: miamioh/build:dist-laravel
+  before_script:
+    - composer install --quiet --no-dev
+  script: run -s $APP_SPEC_FILE
+  artifacts:
+    paths:
+      - '*.tar.gz'
+    expire_in: 1 week
+  only:
+    - test
+    - production
+
+build:
+  stage: build
+  image: miamioh/build:create-rpm
+  before_script: []
+  script: run -s $APP_SPEC_FILE
+  dependencies:
+    - prepare
+  artifacts:
+    paths:
+      - rpm/RPMS/x86_64/*.rpm
+    expire_in: 1 week
+  only:
+    - test
+    - production
+
+deploy-test:
+  stage: deploy
+  image: miamioh/build:deploy-rpm
+  before_script: []
+  script:
+    - run
+  dependencies:
+    - build
+  environment:
+    name: $CI_COMMIT_REF_NAME
+  only:
+    - test
+
+deploy-production:
+  stage: deploy
+  image: miamioh/build:deploy-rpm
+  before_script: []
+  script:
+    - run
+  dependencies:
+    - build
+  environment:
+    name: $CI_COMMIT_REF_NAME
+  only:
+    - production
+  when: manual
+  allow_failure: false
+
+apply-test:
+  stage: apply
+  image: miamioh/build:run-puppet
+  before_script: []
+  script:
+    - run -h $DEPLOY_HOSTGROUP
+  dependencies:
+    - deploy-test
+  environment:
+    name: $CI_COMMIT_REF_NAME
+  only:
+    - test
+
+apply-production:
+  stage: apply
+  image: miamioh/build:run-puppet
+  before_script: []
+  script:
+    - run -h $DEPLOY_HOSTGROUP
+  dependencies:
+    - deploy-production
+  environment:
+    name: $CI_COMMIT_REF_NAME
+  only:
+    - production
