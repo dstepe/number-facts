@@ -3,6 +3,6 @@
 @section('title', 'Number Facts')
 
 @section('body')
-    <p>Fact for the number 5.</p>
-    <p>5 is the number of platonic solids.</p>
+    <p>Fact for the number {{ $number }}.</p>
+    <p>{{ $fact }}</p>
 @endsection

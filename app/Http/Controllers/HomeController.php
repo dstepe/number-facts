@@ -8,6 +8,9 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return view('home');
+        $number = 5;
+        $fact = '5 is the number of platonic solids.';
+
+        return view('home', compact('number', 'fact'));
     }
 }
