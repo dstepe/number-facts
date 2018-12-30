@@ -67,4 +67,10 @@ Starting Tag 0.1.2
 
 We can foresee problems with the current view implementation and decide to tackle that now. We have a single view which includes all markup and we want to create a base view to make managing changes easier. It's time to refactor. Remember that refactoring is not "this is not working correctly, so let's change it." Refactoring is the process of taking code covered by tests and making it better, using the tests to ensure it continues producing the correct results. Refactoring should not result in changes to existing tests.
 
-Our refactoring results in base view and a much simpler view for the home page. We had to update the home route as well. The feature test for NF-01 continues to pass, though, which tells us our refactoring did not break anything. (Review tag 0.2.0 for detaisl.)
+Our refactoring results in base view and a much simpler view for the home page. We had to update the home route as well. The feature test for NF-01 continues to pass, though, which tells us our refactoring did not break anything. (Review tag 0.2.0 for details.)
+
+## Discovering Domain Objects
+
+Starting Tag 0.2.0
+
+The hardcoded number and fact is useful for producing something for stakeholders for review, but it doesn't help the development team understand how the application will work. Our next step will be to drive the static values deeper into the framework, working our way toward Domain Objects. We will begin by creating a controller for the home route and moving the static data from the view into variables provided by the controller method.
