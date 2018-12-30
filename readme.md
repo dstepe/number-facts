@@ -55,4 +55,8 @@ Starting Tag 0.1.0
 
 Now that we have a known good startig point, we will begin implementing the feature described in story NF-01, "As a visitor, I should see a number fact when I visit the home page." This seems simple and it's very tempting to do far more work than necessary. Remember the acceptance criteria is simply "A number and associated fact are presented on the home page." We very intentionally left out the words "random" and "from numberfacts.com" in keeping with the INVEST (https://www.agilealliance.org/glossary/invest) criteria. The primary value of this story will be a product the stakeholders can react to, not final feature set.
 
-We can now create a feature test which will demonstrate this functionality and ensure we continue providing this feature as development progresses. We will create a new feature test for the default home route that looks for the number 42 and the associated math fact "5 is the number of platonic solids." We selected this from the numberfacts.com site for testing purposes.
+We can now create a feature test which will demonstrate this functionality and ensure we continue providing this feature as development progresses. We will create a new feature test for the default home route that looks for the number 42 and the associated math fact "5 is the number of platonic solids." We selected this from the numberfacts.com site for testing purposes. (Review tag 0.1.1 to see the test.)
+
+As expected, the test fails because the expected text is not found. We will address that by hardcoding the number and fact into the view. Remember, the practice of TDD requires the minimal amount of work necessary to make the test pass. In this case, there is no requirement for more than hardcoding in the view. This obviously won't be the final solution, but we don't know more than that right now.
+
+And just like that, our feature test passes and we have a potentially shippable product which can be shown to stakeholders. 
