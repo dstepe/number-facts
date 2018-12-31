@@ -8,8 +8,6 @@
 
 namespace App\MiamiOH;
 
-use Nexmo\Numbers\Number;
-
 class NumberFactFinder
 {
     public function findByInteger(int $number): NumberFact
