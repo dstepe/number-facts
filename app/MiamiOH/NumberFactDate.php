@@ -8,7 +8,6 @@
 
 namespace App\MiamiOH;
 
-
 use Carbon\Carbon;
 
 class NumberFactDate implements NumberFact
@@ -23,7 +22,7 @@ class NumberFactDate implements NumberFact
 
     private function convertToString(int $day, int $month): string
     {
-        $date = Carbon::createFromDate(date('y'), $month, $day);
+        $date = Carbon::createFromDate((int) date('Y'), $month, $day);
         return $date->format('F j');
     }
 }

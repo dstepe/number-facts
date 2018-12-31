@@ -8,7 +8,6 @@
 
 namespace App\MiamiOH;
 
-
 class NumberFactInteger implements NumberFact
 {
     use ShowsNumberFact;

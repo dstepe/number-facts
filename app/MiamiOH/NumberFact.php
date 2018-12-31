@@ -8,7 +8,6 @@
 
 namespace App\MiamiOH;
 
-
 interface NumberFact
 {
     public function number(): string;
