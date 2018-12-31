@@ -3,11 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\MiamiOH\NumberFactDate;
+use App\MiamiOH\NumberFactFinder;
 use App\MiamiOH\NumberFactInteger;
 use Illuminate\Http\Request;
 
 class LookupController extends Controller
 {
+    /**
+     * @var NumberFactFinder
+     */
+    private $factFinder;
+
+    public function __construct(NumberFactFinder $factFinder)
+    {
+        $this->factFinder = $factFinder;
+    }
+
     public function index()
     {
         return view('lookup');
@@ -15,7 +26,7 @@ class LookupController extends Controller
 
     public function lookup(Request $request)
     {
-        $numberFact = new NumberFactInteger(10, '10 is the number of n-Queens Problem solutions for n = 5.');
+        $numberFact = $this->factFinder->findByInteger(10);
 
         return view('lookup', compact('numberFact'));
     }

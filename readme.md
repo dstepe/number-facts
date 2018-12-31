@@ -121,3 +121,9 @@ We clarify that the provided number and fact should replace the default, not app
 Notice that we do not consider what constitutes a valid number at this point. Our first priority is to make the feature work on the "happy path" with known, valid values. The product owner can prioritize a separate story for validation.
 
 The number input and display of the resulting fact should be covered by feature tests, so we start there. We use a new set of static data to implement the feature in order to distinguish from the the first. We also take this opportunity to refactor the blades, creating a reusable partial in order to keep DRY. (Review tag 0.4.0 for details.)
+
+At this point, our two controllers are responsible for creating NumberFact objects using hard-coded values. While this gets our tests passing and gives the stakeholders something to review, creating objects should be handled by something else. After some discussion, the team decides we need a NumberFactFinder class to assume this responsibility. The controllers will use this class to find a NumberFact for display through the views.
+
+The smallest change possible is to move the NumberFact creation into appropriate methods of the NumberFactFinder class. We avoid any other changes until we know the new class is behaving correctly and all feature tests continue to pass. The FactFinder class starts off with all the same hard coded values and very limited facts, but achieves the goal of moving the creation responsiblity into an appropriate class. (Review tag 0.4.1 for details.)
+
+Once the NumberFactFinder class is ready, we use Laravel's dependency injection to make it available to our two controllers and replace the creation of the NumberFacts with calls to the NumberFactFinder (tag 0.4.2). All feature tests continue to pass with no changes, which gives us high confidence that the existing features have not been impacted.

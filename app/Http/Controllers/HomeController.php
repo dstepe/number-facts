@@ -3,15 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\MiamiOH\NumberFactDate;
+use App\MiamiOH\NumberFactFinder;
 use App\MiamiOH\NumberFactInteger;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+    /**
+     * @var NumberFactFinder
+     */
+    private $factFinder;
+
+    public function __construct(NumberFactFinder $factFinder)
+    {
+        $this->factFinder = $factFinder;
+    }
+
     public function index()
     {
-        $numberFact = new NumberFactInteger(5, '5 is the number of platonic solids.');
-        $dateFact = new NumberFactDate(15, 10, 'October 15th is the day in 1582 that Pope Gregory XIII implements the Gregorian calendar.');
+        $numberFact = $this->factFinder->findByInteger(5);
+        $dateFact = $this->factFinder->findByDayAndMonth(15, 10);
 
         return view('home', compact('numberFact', 'dateFact'));
     }
