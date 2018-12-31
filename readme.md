@@ -80,3 +80,9 @@ Success! We have moved the hard coded data from the view into a controller metho
 Our first attempt does the minimum necessary to make our new class return our static sample data while passing unit tests (tag 0.2.3). This gets us started, but it doesn't make sense for the number and fact to be generated in the class, the class should be told what those are. We refactor the tests and then the implementation in the class to do this (tag 0.2.4).
 
 The NumberFact domain object is good enough for now and we can incorporate it into our controller. The controller will need to create the object, which is less than ideal, but is acceptable as a small step forward. We'll deal with NumberFact creation later. Our goal now is to discover what domain objects our application will be working with. After updating the controller method, we run the feature test to ensure the NR-01 story feature still passes. (Review tag 0.2.5 for details.)
+
+## Moving On
+
+Starting Tag 0.2.5
+
+The team agrees that NF-01 is complete and can be marked done. The acceptance criteria has been met, we have discovered the first domain object in the application and we have something to share with stakeholders. It's time to move on to NF-02, "As a visitor, I should see a date fact when I visit the home page." The acceptance criteria is similar to NF-01, "A date and associated fact are presented on the home page." We'll take the same approach of creating a feature test and making it pass with static data in the view. (Review tab 0.3.0 for details.)
