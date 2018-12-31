@@ -8,20 +8,20 @@
 
 namespace Tests\Unit\MiamiOH;
 
-use App\MiamiOH\NumberFact;
+use App\MiamiOH\NumberFactInteger;
 use Tests\TestCase;
 
-class NumberFactTest extends TestCase
+class NumberFactIntegerTest extends TestCase
 {
 
-    /** @var NumberFact */
+    /** @var NumberFactInteger */
     private $fact;
 
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->fact = new NumberFact(5, '5 is the number of platonic solids.');
+        $this->fact = new NumberFactInteger(5, '5 is the number of platonic solids.');
     }
 
     public function testReturnsNumberAssociatedWithFact(): void

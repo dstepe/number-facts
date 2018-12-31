@@ -1,5 +1,6 @@
 <?php
-/** @var \App\MiamiOH\NumberFact $fact */
+/** @var \App\MiamiOH\ShowsNumberFact $numberFact */
+/** @var \App\MiamiOH\ShowsNumberFact $dateFact */
 ?>
 
 @extends('base')
@@ -7,6 +8,14 @@
 @section('title', 'Number Facts')
 
 @section('body')
-    <p>Fact for the number {{ $fact->number() }}.</p>
-    <p>{{ $fact->string() }}</p>
+    <div class="fact-number">
+        <p>Fact for the number {{ $numberFact->number() }}.</p>
+        <p>{{ $numberFact->string() }}</p>
+    </div>
+
+    <div class="fact-number">
+        <p>Fact for the date {{ $dateFact->number() }}.</p>
+        <p>{{ $dateFact->string() }}</p>
+    </div>
+
 @endsection

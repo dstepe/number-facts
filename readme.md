@@ -80,3 +80,19 @@ Success! We have moved the hard coded data from the view into a controller metho
 Our first attempt does the minimum necessary to make our new class return our static sample data while passing unit tests (tag 0.2.3). This gets us started, but it doesn't make sense for the number and fact to be generated in the class, the class should be told what those are. We refactor the tests and then the implementation in the class to do this (tag 0.2.4).
 
 The NumberFact domain object is good enough for now and we can incorporate it into our controller. The controller will need to create the object, which is less than ideal, but is acceptable as a small step forward. We'll deal with NumberFact creation later. Our goal now is to discover what domain objects our application will be working with. After updating the controller method, we run the feature test to ensure the NR-01 story feature still passes. (Review tag 0.2.5 for details.)
+
+## Moving On
+
+Starting Tag 0.2.5
+
+The team agrees that NF-01 is complete and can be marked done. The acceptance criteria has been met, we have discovered the first domain object in the application and we have something to share with stakeholders. It's time to move on to NF-02, "As a visitor, I should see a date fact when I visit the home page." The acceptance criteria is similar to NF-01, "A date and associated fact are presented on the home page." We'll take the same approach of creating a feature test and making it pass with static data in the view. (Review tag 0.3.0 for details.)
+
+As we start to move the static values from the view into the controller, we refactor to create a second NumberFact object to contain the date fact. Unfortunately, we discover that our implementation of NumberFact assumed an integer parameter for the number. While this made sense for our first use case, the need to represent a date complicates our object. Since we found this early, we can take the opportunity to rethink our design.
+
+The team tries a couple of different designs but settles on using an interface to represent a NumberFact and individual concrete classes for NumberFactInteger and NumberFactDate. Since much of the implementation is common between the two, a PHP trait is used to encapsulate and share it. (Review tag 0.3.1 for details.) The team did discuss using an abstract NumberFact class, but foresaw problems when creational patterns were needed in the future. The interface follows OOP principles and facilities good type hinting in PHP.
+
+## Recap
+
+The team considers NF-02 to be done, and a quick review shows we have delivered a potentially shippable product which provides the highest value features. The stakeholders can react to that product, while the team has been able to establish the application framework and build pipeline. The implementation is still limited, but represents the least code necessary to deliver the features. We have feature and unit test coverage and have discovered the first domain object.
+
+Even though we only delivered two user stories, these features should be deployed to production by this point. (The pipeline and deployment are out of scope for this project, but the within the capabilities of the organization to achieve.) Do not underestimate the value of these accomplishments. The team will delivery more value, faster by having the pipeline established and a foundation of simple, well tested code. Deferring either will lead to delays and risky changes.
