@@ -9,8 +9,7 @@
 
 @section('body')
     <div class="fact-number">
-        <p>Fact for the number {{ $numberFact->number() }}.</p>
-        <p>{{ $numberFact->string() }}</p>
+        @include('partials.numberfact', [$numberFact])
     </div>
 
     <div class="fact-number">

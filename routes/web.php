@@ -12,3 +12,6 @@
 */
 
 Route::get('/', 'HomeController@index');
+
+Route::get('/lookup', 'LookupController@index');
+Route::post('/lookup', 'LookupController@lookup');

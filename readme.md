@@ -96,3 +96,28 @@ The team tries a couple of different designs but settles on using an interface t
 The team considers NF-02 to be done, and a quick review shows we have delivered a potentially shippable product which provides the highest value features. The stakeholders can react to that product, while the team has been able to establish the application framework and build pipeline. The implementation is still limited, but represents the least code necessary to deliver the features. We have feature and unit test coverage and have discovered the first domain object.
 
 Even though we only delivered two user stories, these features should be deployed to production by this point. (The pipeline and deployment are out of scope for this project, but the within the capabilities of the organization to achieve.) Do not underestimate the value of these accomplishments. The team will delivery more value, faster by having the pipeline established and a foundation of simple, well tested code. Deferring either will lead to delays and risky changes.
+
+## Feature Review
+
+The stakeholders are happy with the product so far and the product owner adds more user stories to further clarify the desired features.
+
+| ID   | User Story | Acceptance Criteria |
+| ---- | ---------- | ------------------- |
+| NF-05 | As a visitor, I should see a random number fact when I visit the home page. | A random number and associated fact are presented on the home page. |
+| NF-06 | As a visitor, I should see a date fact for today when I visit the home page. | A date and associated fact for the current date are presented on the home page. |
+
+These additions do not change the priority order, so work will proceed on NF-03.
+
+## Getting Real Facts
+
+NF-02 is a substantial feature, "As a visitor, I want to see a fact for a number I enter." The acceptance criteria has two parts, "The visitor can enter a number and a fact for that number is displayed." First, we must allow the visitor to enter a number. Second, we must display a fact for that number. We can break this into smaller sub-tasks:
+
+* Add a number input to the home page
+* Fetch a fact for the provided number
+* Display the fact for the provided number
+
+We clarify that the provided number and fact should replace the default, not appear in addition.
+
+Notice that we do not consider what constitutes a valid number at this point. Our first priority is to make the feature work on the "happy path" with known, valid values. The product owner can prioritize a separate story for validation.
+
+The number input and display of the resulting fact should be covered by feature tests, so we start there. We use a new set of static data to implement the feature in order to distinguish from the the first. We also take this opportunity to refactor the blades, creating a reusable partial in order to keep DRY. (Review tag 0.4.0 for details.)
