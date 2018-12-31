@@ -8,6 +8,8 @@
 
 namespace App\MiamiOH;
 
+use Nexmo\Numbers\Number;
+
 class NumberFactFinder
 {
     public function findByInteger(int $number): NumberFact
@@ -23,5 +25,20 @@ class NumberFactFinder
         }
 
         return new NumberFactInteger($number, $fact);
+    }
+
+    public function findByDayAndMonth(int $day, int $month): NumberFact
+    {
+        switch ($month) {
+            case 10:
+                $fact = 'October 15th is the day in 1582 that Pope Gregory XIII implements the Gregorian calendar.';
+                break;
+
+            case 4:
+                $fact = 'April 3rd is the day in 1981 that the Osborne 1, the first successful portable computer, is unveiled at the West Coast Computer Faire in San Francisco.';
+                break;
+        }
+
+        return new NumberFactDate($day, $month, $fact);
     }
 }
