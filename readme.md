@@ -144,7 +144,10 @@ After the Repository is working, we can declare the interface as a dependency to
  
  ## Using an External Service
  
- Starting Tag 0.4.3
+Starting Tag 0.4.3
  
- The YAML backed Repository helped us discover and isolate the fetching of actual number fact data. The next step is to implement a REST backed Repository and use the real numbefacts.com API. We will use the popular GuzzleHttp library to perform REST requests. We do not want to rely on the external service while testing, but GuzzleHttp provides some useful testing features for us to use. Our first attempt at the REST Repository seems to go well, though we're only using mock responses for now (tag 0.5.0).
+The YAML backed Repository helped us discover and isolate the fetching of actual number fact data. The next step is to implement a REST backed Repository and use the real numbefacts.com API. We will use the popular GuzzleHttp library to perform REST requests. We do not want to rely on the external service while testing, but GuzzleHttp provides some useful testing features for us to use. Our first attempt at the REST Repository seems to go well, though we're only using mock responses for now (tag 0.5.0).
  
+We can wire the REST Respository into the application in the AppServiceProvider. We use an environment variable to determine when to use the YAML Repository (setting the variable in the phpunit.xml configuration) so our tests will continue working. The moment of truth comes when we try the web application. Disappointingly, we find that we neglected to set the Content-Type header on the requests, we are not getting back the expected JSON data. We add tests to ensure the header is set, implement the change and our app starts working. (Review tag 0.5.1 for details.)
+
+The team steps back and contemplates how our development has progressed. Rather than jumping on what was expected to be the most challenging task first, that of interacting with the remote API, we started by building features based on static data. We drove that static data deeper into the application, discovering domain objects and interfaces as we went. When the time came to implement the interaction with the external API, we found it was trivial to accomplish and had no impact on the rest of our application. 

@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\MiamiOH\Repository;
+use App\MiamiOH\RepositoryRest;
 use App\MiamiOH\RepositoryYaml;
+use GuzzleHttp\Client;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,7 +27,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $repository = new RepositoryYaml(base_path() . '/' . env('DATA_DIR', 'data'));
+        if (env('REPOSITORY') === 'YAML') {
+            $repository = new RepositoryYaml(base_path() . '/' . env('DATA_DIR', 'data'));
+        } else {
+            $repository = new RepositoryRest(new Client());
+        }
+
         $this->app->instance(Repository::class, $repository);
     }
 }

@@ -25,7 +25,11 @@ class RepositoryRest implements Repository
 
     public function lookupNumberMathFact(int $number): NumberFactDataTransferObject
     {
-        $request = new Request('GET', 'http://numbersapi.com/' . $number . '/math');
+        $request = new Request(
+            'GET',
+            'http://numbersapi.com/' . $number . '/math',
+            ['Content-Type' => 'application/json']
+        );
 
         $response = $this->client->send($request);
 
@@ -36,7 +40,11 @@ class RepositoryRest implements Repository
 
     public function lookupDateFact(int $day, int $month): NumberFactDataTransferObject
     {
-        $request = new Request('GET', 'http://numbersapi.com/' . $month . '/' . $day . '/year');
+        $request = new Request(
+            'GET',
+            'http://numbersapi.com/' . $month . '/' . $day . '/date',
+            ['Content-Type' => 'application/json']
+        );
 
         $response = $this->client->send($request);
 
