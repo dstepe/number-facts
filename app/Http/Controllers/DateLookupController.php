@@ -26,10 +26,11 @@ class DateLookupController extends Controller
 
     public function lookup(Request $request)
     {
-        $number = $request->get('number');
+        $month = $request->get('month');
+        $day = $request->get('day');
 
-        $numberFact = $this->factFinder->findByInteger($number);
+        $dateFact = $this->factFinder->findByDayAndMonth($day, $month);
 
-        return view('date-lookup', compact('numberFact'));
+        return view('date-lookup', compact('dateFact'));
     }
 }

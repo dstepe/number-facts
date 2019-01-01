@@ -9,7 +9,7 @@
 
 @section('body')
     <div class="fact-number">
-        <form method="POST" action="lookup">
+        <form method="POST" action="{{ route('date-lookup') }}">
             @csrf
             <p>
                 <span>Enter a date to lookup:</span>
@@ -20,7 +20,7 @@
         </form>
 
         @if (!empty($dateFact))
-            @include('partials.numberfact', [$dateFact])
+            @include('partials.numberfact', ['type' => 'date', 'numberFact' => $dateFact])
         @endif
     </div>
 

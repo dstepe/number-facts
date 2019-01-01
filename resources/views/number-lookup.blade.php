@@ -9,7 +9,7 @@
 
 @section('body')
     <div class="fact-number">
-        <form method="POST" action="lookup">
+        <form method="POST" action="{{ route('number-lookup') }}">
             @csrf
             <p>
                 <span>Enter a number to lookup:</span>
@@ -19,7 +19,7 @@
         </form>
 
         @if (!empty($numberFact))
-            @include('partials.numberfact', [$numberFact])
+            @include('partials.numberfact', ['type' => 'number', 'numberFact' => $numberFact])
         @endif
     </div>
 

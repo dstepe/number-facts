@@ -163,3 +163,5 @@ Starting Tag 0.5.3
 The last of the original user stories should be easy to complete now. NF-04 states taht "As a visitor, I want to see a fact for a date I enter." The acceptance criteria is "The visitor can enter a date and a fact for that date is displayed." This is very similar to NF-03 and the implementation should be straight forward.
 
 Reviewing the necessary UI changes with the product owner leads to a realization that combining the number and date lookup is probably not ideal. The team splits the lookup functionality into number and date, ensuring that all feature tests continue to pass and support the functionality (tag 0.6.0).
+
+Finishing the implementation of the date lookup was easy, but also exposed some other issues which were previously hidden. (Review tag 0.6.1 for details.)
