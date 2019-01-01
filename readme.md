@@ -165,3 +165,16 @@ The last of the original user stories should be easy to complete now. NF-04 stat
 Reviewing the necessary UI changes with the product owner leads to a realization that combining the number and date lookup is probably not ideal. The team splits the lookup functionality into number and date, ensuring that all feature tests continue to pass and support the functionality (tag 0.6.0).
 
 Finishing the implementation of the date lookup was easy, but also exposed some other issues which were previously hidden. (Review tag 0.6.1 for details.)
+
+## Wrapping up the First Feature Set
+
+The stakeholders are very pleased with the features delivered so far. They have been able to test the application and work with the product owner to define new stories. The following additional stories have been added to the backlog:
+
+| ID   | User Story | Acceptance Criteria |
+| ---- | ---------- | ------------------- |
+| NF-07 | As a visitor, I should be able to select the month and day of a date to lookup. | A pop list of months and a pop list of dates are provided to select the input values. |
+| NF-08 | As a visitor, I should be not be able to submit an invalid number to lookup. | The number lookup form only allows valid integer values to be submitted. |
+| NF-09 | As a visitor, I should be able to choose between math and trivia number facts when looking up a number. | A form control allows choosing between math and trivia types, with math being the default. |
+| NF-10 | As a visitor, I should see the home page randomly choose between math and random number types. | The home page randomly chooses between math and trivia number fact types. |
+
+You will notice that these stories are enhancements to existing features. Some, like using pop-ups for the month and day inputs, may seem obvious and you would be tempted to implement them during the original feature development. However, doing so would violate the principle of writing the least code to satisfy the requirement. You could argue that the pop-ups should just be part of the original feature, but that violates the INVEST approach to stories. By implementing the no frills basic functionality, we do the list work necessary to give stakeholders something to react to. Improving it comes later.
