@@ -22,11 +22,6 @@ class RandomNumberEnvTest extends TestCase
         $this->generator = new RandomNumberEnv();
     }
 
-    public function testReturnsExpectedDefault(): void
-    {
-        $this->assertEquals(5, $this->generator->generate());
-    }
-
     public function testReturnsValueFromEnvironment(): void
     {
         putenv('RANDOM_NUMBER=10');

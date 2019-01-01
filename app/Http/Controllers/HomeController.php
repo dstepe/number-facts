@@ -21,7 +21,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        $numberFact = $this->factFinder->findByInteger(5);
+        $numberFact = $this->factFinder->findRandomIntegerFact();
         $dateFact = $this->factFinder->findByDayAndMonth(15, 10);
 
         return view('home', compact('numberFact', 'dateFact'));

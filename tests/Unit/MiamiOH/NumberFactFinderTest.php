@@ -11,6 +11,7 @@ namespace Tests\Unit\MiamiOH;
 use App\MiamiOH\NumberFact;
 use App\MiamiOH\NumberFactDataTransferObject;
 use App\MiamiOH\NumberFactFinder;
+use App\MiamiOH\RandomNumberEnv;
 use App\MiamiOH\Repository;
 use PHPUnit\Framework\MockObject\MockObject;
 use Tests\TestCase;
@@ -29,7 +30,7 @@ class NumberFactFinderTest extends TestCase
 
         $this->repository = $this->createMock(Repository::class);
 
-        $this->finder = new NumberFactFinder($this->repository);
+        $this->finder = new NumberFactFinder($this->repository, new RandomNumberEnv());
     }
 
     /** @dataProvider integerFactProvider */
@@ -100,6 +101,29 @@ class NumberFactFinderTest extends TestCase
                 ]
             ],
         ];
+    }
+
+    public function testFindsFactForRandomInteger(): void
+    {
+        $number = 7;
+        $factString = '7 is a good number';
+
+        putenv('RANDOM_NUMBER=' . $number);
+
+        $this->repository
+            ->expects($this->once())
+            ->method('lookupNumberMathFact')
+            ->with($this->equalTo($number))
+            ->willReturn($this->newFactDataTransferObject([
+                'number' => $number,
+                'text' => $factString,
+            ]));
+
+        $fact = $this->finder->findRandomIntegerFact();
+
+        $this->assertInstanceOf(NumberFact::class, $fact);
+        $this->assertEquals($number, $fact->number());
+        $this->assertEquals($factString, $fact->string());
     }
 
     private function newFactDataTransferObject(array $data = []): NumberFactDataTransferObject
