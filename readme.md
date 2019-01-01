@@ -142,3 +142,9 @@ The first task is to create the Repository interface, a concrete implemenation f
 
 After the Repository is working, we can declare the interface as a dependency to the NumberFactFinder and wire the YAML backed implementation into the container in the AppServiceProvider. This requires providing a Repository implementation while testing the NumberFactFinder class and we opt to use a mock to prevent dependency on the YAML data. (Review tag 0.4.3 for details.)
  
+ ## Using an External Service
+ 
+ Starting Tag 0.4.3
+ 
+ The YAML backed Repository helped us discover and isolate the fetching of actual number fact data. The next step is to implement a REST backed Repository and use the real numbefacts.com API. We will use the popular GuzzleHttp library to perform REST requests. We do not want to rely on the external service while testing, but GuzzleHttp provides some useful testing features for us to use. Our first attempt at the REST Repository seems to go well, though we're only using mock responses for now (tag 0.5.0).
+ 

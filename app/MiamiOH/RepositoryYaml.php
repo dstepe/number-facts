@@ -43,7 +43,8 @@ class RepositoryYaml implements Repository
 
     public function lookupDateFact(int $day, int $month): NumberFactDataTransferObject
     {
-        $dateKey = date('z', mktime(0, 0, 0, $month, $day, date('Y'))) + 1;
+        $dateKey = (int) date('z', mktime(0, 0, 0, $month, $day, (int) date('Y')));
+        $dateKey += 1; // Increment for 1 based index
 
         $data = [
             'text' => '',
