@@ -23,4 +23,5 @@
         @endif
     </div>
 
+    <p><a href="{{ route('home') }}">Home</a></p>
 @endsection

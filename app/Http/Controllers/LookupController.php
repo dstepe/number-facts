@@ -26,7 +26,9 @@ class LookupController extends Controller
 
     public function lookup(Request $request)
     {
-        $numberFact = $this->factFinder->findByInteger(10);
+        $number = $request->get('number');
+
+        $numberFact = $this->factFinder->findByInteger($number);
 
         return view('lookup', compact('numberFact'));
     }

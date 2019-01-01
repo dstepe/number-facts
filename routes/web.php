@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'HomeController@index');
+Route::get('/', 'HomeController@index')->name('home');
 
-Route::get('/lookup', 'LookupController@index');
+Route::get('/lookup', 'LookupController@index')->name('lookup');
 Route::post('/lookup', 'LookupController@lookup');

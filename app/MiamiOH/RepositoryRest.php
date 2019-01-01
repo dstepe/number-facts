@@ -49,5 +49,4 @@ class RepositoryRest implements Repository
 
         return json_decode($response->getBody()->getContents(), true);
     }
-
 }
