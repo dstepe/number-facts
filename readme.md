@@ -178,3 +178,9 @@ The stakeholders are very pleased with the features delivered so far. They have 
 | NF-10 | As a visitor, I should see the home page randomly choose between math and random number types. | The home page randomly chooses between math and trivia number fact types. |
 
 You will notice that these stories are enhancements to existing features. Some, like using pop-ups for the month and day inputs, may seem obvious and you would be tempted to implement them during the original feature development. However, doing so would violate the principle of writing the least code to satisfy the requirement. You could argue that the pop-ups should just be part of the original feature, but that violates the INVEST approach to stories. By implementing the no frills basic functionality, we do the list work necessary to give stakeholders something to react to. Improving it comes later.
+
+## Randomness
+
+Starting Tag 0.6.1
+
+The team is ready to move on to NF-05, "As a visitor, I should see a random number fact when I visit the home page." Randomness seems orthogonal to our strictly static test data and the team worries this feature will jeopardize the current test coverage. After discussing the issue, we decide that a random number class can be used to enable this feature. If that class is provided as a dependency, we can use a mock during testing to ensure we always get the expected value. A random number generator suitable for our purposes only takes a few minutes (tag 0.7.0).
