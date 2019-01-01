@@ -127,3 +127,18 @@ At this point, our two controllers are responsible for creating NumberFact objec
 The smallest change possible is to move the NumberFact creation into appropriate methods of the NumberFactFinder class. We avoid any other changes until we know the new class is behaving correctly and all feature tests continue to pass. The FactFinder class starts off with all the same hard coded values and very limited facts, but achieves the goal of moving the creation responsiblity into an appropriate class. (Review tag 0.4.1 for details.)
 
 Once the NumberFactFinder class is ready, we use Laravel's dependency injection to make it available to our two controllers and replace the creation of the NumberFacts with calls to the NumberFactFinder (tag 0.4.2). All feature tests continue to pass with no changes, which gives us high confidence that the existing features have not been impacted.
+
+## Retreiving Fact Data
+
+The creation of concrete NumberFact objects is nicely isolated in the NumberFactFinder, but that class needs to get facts from something more sustainable than a switch statement. Nothing else in the system should change. Let's say that again. Nothing else in the system should change. The NumberFact and NumberFactFinder classes have their single responsibilities which do not include actually optaining fact data. The NumberFactFinder will use another class to optain the data and construct the NumberFact objects.
+
+What is that other class? There are a couple of patterns which may fit here. The team opts to implement a Repository. At this point, we should be looking forward. We know that fact data will need to come from the numberfacts.com REST API, but we don't want to rely on that API during our unit and feature testing. Our job is not to test the external API. We decide to create a Repository interface with a concrete implementation using YAML data files for now.
+
+The team has a little more discussion before starting on the Repository. The NumberFactFinder will use the Repository to find facts. The team would like to use a fluent interface to make it easy to expand the capabilities. The Repository will return data which the NumberFactFinder will use to construct approprirate NumberFact objects. The returned data could be in the form of an array, but that would require constant maintainence and risk bugs. The team decides to create a Data Transfer Object to carry the data between the objects. The common API result fields from numberfacts.com will be used as a starting point.
+
+Reviewing the numberfacts.com API, we find that number facts can be either math or trivia types. We've only been using math types for our development so far. This will have implications for our design, but we will deal with the upstream changes after the Repository is done.
+
+The first task is to create the Repository interface, a concrete implemenation for YAML and the data transfer object. The Repository interface only needs two methods for now. (Review tag 0.4.2 for details.)
+
+After the Repository is working, we can declare the interface as a dependency to the NumberFactFinder and wire the YAML backed implementation into the container in the AppServiceProvider. This requires providing a Repository implementation while testing the NumberFactFinder class and we opt to use a mock to prevent dependency on the YAML data. (Review tag 0.4.3 for details.)
+ 

@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\MiamiOH\Repository;
+use App\MiamiOH\RepositoryYaml;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $repository = new RepositoryYaml(base_path() . '/' . env('DATA_DIR', 'data'));
+        $this->app->instance(Repository::class, $repository);
     }
 }

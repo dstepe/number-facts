@@ -9,7 +9,7 @@
 namespace Tests\Unit\MiamiOH;
 
 use App\MiamiOH\NumberFactDataTransferObject;
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 
 class NumberFactDataTransferObjectTest extends TestCase
 {

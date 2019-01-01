@@ -8,7 +8,6 @@
 
 namespace Tests\Unit\MiamiOH;
 
-use App\MiamiOH\Repository;
 use App\MiamiOH\RepositoryYaml;
 use Tests\TestCase;
 

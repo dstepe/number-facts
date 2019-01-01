@@ -10,33 +10,27 @@ namespace App\MiamiOH;
 
 class NumberFactFinder
 {
+    /**
+     * @var Repository
+     */
+    private $repository;
+
+    public function __construct(Repository $repository)
+    {
+        $this->repository = $repository;
+    }
+
     public function findByInteger(int $number): NumberFact
     {
-        switch ($number) {
-            case 5:
-                $fact = '5 is the number of platonic solids.';
-                break;
+        $fact = $this->repository->lookupNumberMathFact($number);
 
-            case 10:
-                $fact = '10 is the number of n-Queens Problem solutions for n = 5.';
-                break;
-        }
-
-        return new NumberFactInteger($number, $fact);
+        return new NumberFactInteger($number, $fact->text());
     }
 
     public function findByDayAndMonth(int $day, int $month): NumberFact
     {
-        switch ($month) {
-            case 10:
-                $fact = 'October 15th is the day in 1582 that Pope Gregory XIII implements the Gregorian calendar.';
-                break;
+        $fact = $this->repository->lookupDateFact($day, $month);
 
-            case 4:
-                $fact = 'April 3rd is the day in 1981 that the Osborne 1, the first successful portable computer, is unveiled at the West Coast Computer Faire in San Francisco.';
-                break;
-        }
-
-        return new NumberFactDate($day, $month, $fact);
+        return new NumberFactDate($day, $month, $fact->text());
     }
 }
