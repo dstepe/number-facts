@@ -96,3 +96,62 @@ The team tries a couple of different designs but settles on using an interface t
 The team considers NF-02 to be done, and a quick review shows we have delivered a potentially shippable product which provides the highest value features. The stakeholders can react to that product, while the team has been able to establish the application framework and build pipeline. The implementation is still limited, but represents the least code necessary to deliver the features. We have feature and unit test coverage and have discovered the first domain object.
 
 Even though we only delivered two user stories, these features should be deployed to production by this point. (The pipeline and deployment are out of scope for this project, but the within the capabilities of the organization to achieve.) Do not underestimate the value of these accomplishments. The team will delivery more value, faster by having the pipeline established and a foundation of simple, well tested code. Deferring either will lead to delays and risky changes.
+
+## Feature Review
+
+The stakeholders are happy with the product so far and the product owner adds more user stories to further clarify the desired features.
+
+| ID   | User Story | Acceptance Criteria |
+| ---- | ---------- | ------------------- |
+| NF-05 | As a visitor, I should see a random number fact when I visit the home page. | A random number and associated fact are presented on the home page. |
+| NF-06 | As a visitor, I should see a date fact for today when I visit the home page. | A date and associated fact for the current date are presented on the home page. |
+
+These additions do not change the priority order, so work will proceed on NF-03.
+
+## Getting Real Facts
+
+NF-02 is a substantial feature, "As a visitor, I want to see a fact for a number I enter." The acceptance criteria has two parts, "The visitor can enter a number and a fact for that number is displayed." First, we must allow the visitor to enter a number. Second, we must display a fact for that number. We can break this into smaller sub-tasks:
+
+* Add a number input to the home page
+* Fetch a fact for the provided number
+* Display the fact for the provided number
+
+We clarify that the provided number and fact should replace the default, not appear in addition.
+
+Notice that we do not consider what constitutes a valid number at this point. Our first priority is to make the feature work on the "happy path" with known, valid values. The product owner can prioritize a separate story for validation.
+
+The number input and display of the resulting fact should be covered by feature tests, so we start there. We use a new set of static data to implement the feature in order to distinguish from the the first. We also take this opportunity to refactor the blades, creating a reusable partial in order to keep DRY. (Review tag 0.4.0 for details.)
+
+At this point, our two controllers are responsible for creating NumberFact objects using hard-coded values. While this gets our tests passing and gives the stakeholders something to review, creating objects should be handled by something else. After some discussion, the team decides we need a NumberFactFinder class to assume this responsibility. The controllers will use this class to find a NumberFact for display through the views.
+
+The smallest change possible is to move the NumberFact creation into appropriate methods of the NumberFactFinder class. We avoid any other changes until we know the new class is behaving correctly and all feature tests continue to pass. The FactFinder class starts off with all the same hard coded values and very limited facts, but achieves the goal of moving the creation responsiblity into an appropriate class. (Review tag 0.4.1 for details.)
+
+Once the NumberFactFinder class is ready, we use Laravel's dependency injection to make it available to our two controllers and replace the creation of the NumberFacts with calls to the NumberFactFinder (tag 0.4.2). All feature tests continue to pass with no changes, which gives us high confidence that the existing features have not been impacted.
+
+## Retreiving Fact Data
+
+The creation of concrete NumberFact objects is nicely isolated in the NumberFactFinder, but that class needs to get facts from something more sustainable than a switch statement. Nothing else in the system should change. Let's say that again. Nothing else in the system should change. The NumberFact and NumberFactFinder classes have their single responsibilities which do not include actually optaining fact data. The NumberFactFinder will use another class to optain the data and construct the NumberFact objects.
+
+What is that other class? There are a couple of patterns which may fit here. The team opts to implement a Repository. At this point, we should be looking forward. We know that fact data will need to come from the numberfacts.com REST API, but we don't want to rely on that API during our unit and feature testing. Our job is not to test the external API. We decide to create a Repository interface with a concrete implementation using YAML data files for now.
+
+The team has a little more discussion before starting on the Repository. The NumberFactFinder will use the Repository to find facts. The team would like to use a fluent interface to make it easy to expand the capabilities. The Repository will return data which the NumberFactFinder will use to construct approprirate NumberFact objects. The returned data could be in the form of an array, but that would require constant maintainence and risk bugs. The team decides to create a Data Transfer Object to carry the data between the objects. The common API result fields from numberfacts.com will be used as a starting point.
+
+Reviewing the numberfacts.com API, we find that number facts can be either math or trivia types. We've only been using math types for our development so far. This will have implications for our design, but we will deal with the upstream changes after the Repository is done.
+
+The first task is to create the Repository interface, a concrete implemenation for YAML and the data transfer object. The Repository interface only needs two methods for now. (Review tag 0.4.2 for details.)
+
+After the Repository is working, we can declare the interface as a dependency to the NumberFactFinder and wire the YAML backed implementation into the container in the AppServiceProvider. This requires providing a Repository implementation while testing the NumberFactFinder class and we opt to use a mock to prevent dependency on the YAML data. (Review tag 0.4.3 for details.)
+ 
+ ## Using an External Service
+ 
+Starting Tag 0.4.3
+ 
+The YAML backed Repository helped us discover and isolate the fetching of actual number fact data. The next step is to implement a REST backed Repository and use the real numbefacts.com API. We will use the popular GuzzleHttp library to perform REST requests. We do not want to rely on the external service while testing, but GuzzleHttp provides some useful testing features for us to use. Our first attempt at the REST Repository seems to go well, though we're only using mock responses for now (tag 0.5.0).
+ 
+We can wire the REST Respository into the application in the AppServiceProvider. We use an environment variable to determine when to use the YAML Repository (setting the variable in the phpunit.xml configuration) so our tests will continue working. The moment of truth comes when we try the web application. Disappointingly, we find that we neglected to set the Content-Type header on the requests, we are not getting back the expected JSON data. We add tests to ensure the header is set, implement the change and our app starts working. (Review tag 0.5.1 for details.)
+
+The team steps back and contemplates how our development has progressed. Rather than jumping on what was expected to be the most challenging task first, that of interacting with the remote API, we started by building features based on static data. We drove that static data deeper into the application, discovering domain objects and interfaces as we went. When the time came to implement the interaction with the external API, we found it was trivial to accomplish and had no impact on the rest of our application. 
+
+We observe a lot of redundancy and opportunity for improvement in the REST Repository class. Armed with tests, however, we are highly confident we can refactor that class without causing any issues. The refactoring is quick and results in a simpler class. We also remove a redundant unit test (love your tests like you love your code). (Review tag 0.5.2 for details.)
+
+In our excitment at how well the REST implementation went, we almost forgot to connect the user input to the lookup. A quick change to the lookup controller, and a little navigation to help get around, and we finish NF-03 with a fully functional application. (Review tag 0.5.3 for details.)

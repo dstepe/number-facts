@@ -7,7 +7,7 @@ use App\MiamiOH\NumberFactFinder;
 use App\MiamiOH\NumberFactInteger;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class LookupController extends Controller
 {
     /**
      * @var NumberFactFinder
@@ -21,9 +21,15 @@ class HomeController extends Controller
 
     public function index()
     {
-        $numberFact = $this->factFinder->findByInteger(5);
-        $dateFact = $this->factFinder->findByDayAndMonth(15, 10);
+        return view('lookup');
+    }
 
-        return view('home', compact('numberFact', 'dateFact'));
+    public function lookup(Request $request)
+    {
+        $number = $request->get('number');
+
+        $numberFact = $this->factFinder->findByInteger($number);
+
+        return view('lookup', compact('numberFact'));
     }
 }

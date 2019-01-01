@@ -42,6 +42,9 @@ coverage:
     reports:
       junit: coverage/phpunit.junit.xml
     expire_in: 1 week
+  except:
+    - test
+    - production
 
 phpcsfixer:
   stage: analyze
@@ -49,6 +52,9 @@ phpcsfixer:
   script:
     - run $APP_SOURCE_PATH
   allow_failure: true
+  except:
+    - test
+    - production
 
 phpstan:
   stage: analyze
@@ -56,6 +62,9 @@ phpstan:
   script:
     - run $APP_SOURCE_PATH
   allow_failure: true
+  except:
+    - test
+    - production
 
 quality:
   stage: review
@@ -64,6 +73,9 @@ quality:
     - run -p $MINIMUM_COVERAGE_PERCENT -s $MAXIMUM_CRAP_SCORE
   dependencies:
     - coverage
+  except:
+    - test
+    - production
 
 feature:
   stage: review
