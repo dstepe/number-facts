@@ -15,7 +15,7 @@ class NumberFactDataTransferObject
      */
     private $text;
     /**
-     * @var float
+     * @var int
      */
     private $number;
     /**
@@ -27,7 +27,7 @@ class NumberFactDataTransferObject
      */
     private $type;
 
-    public function __construct(string $text, float $number, bool $found, string $type)
+    public function __construct(string $text, int $number, bool $found, string $type)
     {
         $this->text = $text;
         $this->number = $number;
