@@ -25,32 +25,29 @@ class RepositoryRest implements Repository
 
     public function lookupNumberMathFact(int $number): NumberFactDataTransferObject
     {
-        $request = new Request(
-            'GET',
-            'http://numbersapi.com/' . $number . '/math',
-            ['Content-Type' => 'application/json']
-        );
-
-        $response = $this->client->send($request);
-
-        $data = json_decode($response->getBody()->getContents(), true);
+        $data = $this->getFactFromApi($number . '/math');
 
         return NumberFactDataTransferObject::fromArray($data);
     }
 
     public function lookupDateFact(int $day, int $month): NumberFactDataTransferObject
     {
+        $data = $this->getFactFromApi($month . '/' . $day . '/date');
+
+        return NumberFactDataTransferObject::fromArray($data);
+    }
+
+    private function getFactFromApi(string $path): array
+    {
         $request = new Request(
             'GET',
-            'http://numbersapi.com/' . $month . '/' . $day . '/date',
+            'http://numbersapi.com/' . $path,
             ['Content-Type' => 'application/json']
         );
 
         $response = $this->client->send($request);
 
-        $data = json_decode($response->getBody()->getContents(), true);
-
-        return NumberFactDataTransferObject::fromArray($data);
+        return json_decode($response->getBody()->getContents(), true);
     }
 
 }

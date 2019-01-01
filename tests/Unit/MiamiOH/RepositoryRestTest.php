@@ -28,7 +28,7 @@ class RepositoryRestTest extends TestCase
         $this->container = [];
     }
 
-    public function testMakesNumberMathRequestsWithContentTypeJson(): void
+    public function testMakesApiRequestsWithContentTypeJson(): void
     {
         $client = $this->newHttpClientWithResponses([
             $this->newJsonResponse($this->newFactData([
@@ -68,28 +68,6 @@ class RepositoryRestTest extends TestCase
         $this->assertEquals('5 is the number of platonic solids.', $fact->text());
         $this->assertTrue($fact->found());
         $this->assertEquals('math', $fact->type());
-    }
-
-    public function testMakesDateRequestsWithContentTypeJson(): void
-    {
-        $client = $this->newHttpClientWithResponses([
-            $this->newJsonResponse($this->newFactData([
-                'number' => 5,
-                'text' => '5 is the number of platonic solids.',
-                'type' => 'math',
-            ]))
-        ]);
-
-        $repository = new RepositoryRest($client);
-
-        $repository->lookupDateFact(15, 10);
-
-        $this->assertCount(1, $this->container);
-
-        /** @var Request $request */
-        $request = $this->container[0]['request'];
-        $this->assertTrue($request->hasHeader('Content-Type'));
-        $this->assertContains('application/json', $request->getHeader('Content-Type'));
     }
 
     public function testCanLookUpDateFact(): void
