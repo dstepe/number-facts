@@ -17,5 +17,5 @@
         <p>{{ $dateFact->string() }}</p>
     </div>
 
-    <p><a href="{{ route('lookup') }}">Lookup Facts</a></p>
+    <p><a href="{{ route('number-lookup') }}">Lookup Number Facts</a> | <a href="{{ route('date-lookup') }}">Lookup Date Facts</a></p>
 @endsection

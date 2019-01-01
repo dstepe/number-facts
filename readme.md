@@ -155,3 +155,11 @@ The team steps back and contemplates how our development has progressed. Rather 
 We observe a lot of redundancy and opportunity for improvement in the REST Repository class. Armed with tests, however, we are highly confident we can refactor that class without causing any issues. The refactoring is quick and results in a simpler class. We also remove a redundant unit test (love your tests like you love your code). (Review tag 0.5.2 for details.)
 
 In our excitment at how well the REST implementation went, we almost forgot to connect the user input to the lookup. A quick change to the lookup controller, and a little navigation to help get around, and we finish NF-03 with a fully functional application. (Review tag 0.5.3 for details.)
+
+## The Last Original Feature
+
+Starting Tag 0.5.3
+
+The last of the original user stories should be easy to complete now. NF-04 states taht "As a visitor, I want to see a fact for a date I enter." The acceptance criteria is "The visitor can enter a date and a fact for that date is displayed." This is very similar to NF-03 and the implementation should be straight forward.
+
+Reviewing the necessary UI changes with the product owner leads to a realization that combining the number and date lookup is probably not ideal. The team splits the lookup functionality into number and date, ensuring that all feature tests continue to pass and support the functionality (tag 0.6.0).
