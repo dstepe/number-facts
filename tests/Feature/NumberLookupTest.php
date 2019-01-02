@@ -5,11 +5,11 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class LookupTest extends TestCase
+class NumberLookupTest extends TestCase
 {
     public function testShowsNumberInput()
     {
-        $response = $this->get('/lookup');
+        $response = $this->get('/number-lookup');
 
         $response->assertStatus(200);
         $response->assertSee('Enter a number to lookup:');
@@ -17,7 +17,7 @@ class LookupTest extends TestCase
 
     public function testVisitorCanSubmitNumberToLookup()
     {
-        $response = $this->post('/lookup', ['number' => 10]);
+        $response = $this->post('/number-lookup', ['number' => 10]);
 
         $response->assertStatus(200);
         $response->assertSee('Fact for the number 10.');

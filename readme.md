@@ -155,3 +155,42 @@ The team steps back and contemplates how our development has progressed. Rather 
 We observe a lot of redundancy and opportunity for improvement in the REST Repository class. Armed with tests, however, we are highly confident we can refactor that class without causing any issues. The refactoring is quick and results in a simpler class. We also remove a redundant unit test (love your tests like you love your code). (Review tag 0.5.2 for details.)
 
 In our excitment at how well the REST implementation went, we almost forgot to connect the user input to the lookup. A quick change to the lookup controller, and a little navigation to help get around, and we finish NF-03 with a fully functional application. (Review tag 0.5.3 for details.)
+
+## The Last Original Feature
+
+Starting Tag 0.5.3
+
+The last of the original user stories should be easy to complete now. NF-04 states taht "As a visitor, I want to see a fact for a date I enter." The acceptance criteria is "The visitor can enter a date and a fact for that date is displayed." This is very similar to NF-03 and the implementation should be straight forward.
+
+Reviewing the necessary UI changes with the product owner leads to a realization that combining the number and date lookup is probably not ideal. The team splits the lookup functionality into number and date, ensuring that all feature tests continue to pass and support the functionality (tag 0.6.0).
+
+Finishing the implementation of the date lookup was easy, but also exposed some other issues which were previously hidden. (Review tag 0.6.1 for details.)
+
+## Wrapping up the First Feature Set
+
+The stakeholders are very pleased with the features delivered so far. They have been able to test the application and work with the product owner to define new stories. The following additional stories have been added to the backlog:
+
+| ID   | User Story | Acceptance Criteria |
+| ---- | ---------- | ------------------- |
+| NF-07 | As a visitor, I should be able to select the month and day of a date to lookup. | A pop list of months and a pop list of dates are provided to select the input values. |
+| NF-08 | As a visitor, I should be not be able to submit an invalid number to lookup. | The number lookup form only allows valid integer values to be submitted. |
+| NF-09 | As a visitor, I should be able to choose between math and trivia number facts when looking up a number. | A form control allows choosing between math and trivia types, with math being the default. |
+| NF-10 | As a visitor, I should see the home page randomly choose between math and random number types. | The home page randomly chooses between math and trivia number fact types. |
+
+You will notice that these stories are enhancements to existing features. Some, like using pop-ups for the month and day inputs, may seem obvious and you would be tempted to implement them during the original feature development. However, doing so would violate the principle of writing the least code to satisfy the requirement. You could argue that the pop-ups should just be part of the original feature, but that violates the INVEST approach to stories. By implementing the no frills basic functionality, we do the list work necessary to give stakeholders something to react to. Improving it comes later.
+
+## Randomness
+
+Starting Tag 0.6.1
+
+The team is ready to move on to NF-05, "As a visitor, I should see a random number fact when I visit the home page." Randomness seems orthogonal to our strictly static test data and the team worries this feature will jeopardize the current test coverage. After discussing the issue, we decide that a random number class can be used to enable this feature. If that class is provided as a dependency, we can use a mock during testing to ensure we always get the expected value. A random number generator suitable for our purposes only takes a few minutes (tag 0.7.0).
+
+We decide to implement the RandomNumber in the NumberFactFinder class. We considering having the controller find the random number, then use the NumberFactFinder as it does now, but that seems to put too much into the controller. The RandomNumber implementation is injected into the NumberFactFinder and used to get a suitable random number. We use Laravel's App::runningUnitTests() to add the correct RandonNumber implementation to the container at run time so our tests continue passing with a known "random" number for the home page. (See tag 0.7.1 for details.)
+
+## Time Related Behavior
+
+Starting Tag 0.7.1
+
+We've wrapped up NF-05 and are ready to start NF-06, "As a visitor, I should see a date fact for today when I visit the home page." The acceptance criteria states "A date and associated fact for the current date are presented on the home page." Again, the team faces a testing challenge, in this case because the home page content is expected to change with the date. The team realizes that testing will require always knowing what today is. We'll be using the PHP Carbon library for date functions and Carbon provides methods for exactly this scenario.
+
+By using Carbon's setTestNow method, we are able to set a fixed value for the current date, enabling our tests to continue passing even as we implement the feature to show the current date's fact. The new method was added to the NumberFactFinder class as well. (Refer to tag 0.7.2 for details.)

@@ -9,13 +9,12 @@
 
 @section('body')
     <div class="fact-number">
-        @include('partials.numberfact', [$numberFact])
+        @include('partials.numberfact', ['type' => 'number', 'numberFact' => $numberFact])
     </div>
 
     <div class="fact-number">
-        <p>Fact for the date {{ $dateFact->number() }}.</p>
-        <p>{{ $dateFact->string() }}</p>
+        @include('partials.numberfact', ['type' => 'date', 'numberFact' => $dateFact])
     </div>
 
-    <p><a href="{{ route('lookup') }}">Lookup Facts</a></p>
+    <p><a href="{{ route('number-lookup') }}">Lookup Number Facts</a> | <a href="{{ route('date-lookup') }}">Lookup Date Facts</a></p>
 @endsection

@@ -13,5 +13,8 @@
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::get('/lookup', 'LookupController@index')->name('lookup');
-Route::post('/lookup', 'LookupController@lookup');
+Route::get('/number-lookup', 'NumberLookupController@index')->name('number-lookup');
+Route::post('/number-lookup', 'NumberLookupController@lookup');
+
+Route::get('/date-lookup', 'DateLookupController@index')->name('date-lookup');
+Route::post('/date-lookup', 'DateLookupController@lookup');
