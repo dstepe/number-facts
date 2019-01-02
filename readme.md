@@ -186,3 +186,11 @@ Starting Tag 0.6.1
 The team is ready to move on to NF-05, "As a visitor, I should see a random number fact when I visit the home page." Randomness seems orthogonal to our strictly static test data and the team worries this feature will jeopardize the current test coverage. After discussing the issue, we decide that a random number class can be used to enable this feature. If that class is provided as a dependency, we can use a mock during testing to ensure we always get the expected value. A random number generator suitable for our purposes only takes a few minutes (tag 0.7.0).
 
 We decide to implement the RandomNumber in the NumberFactFinder class. We considering having the controller find the random number, then use the NumberFactFinder as it does now, but that seems to put too much into the controller. The RandomNumber implementation is injected into the NumberFactFinder and used to get a suitable random number. We use Laravel's App::runningUnitTests() to add the correct RandonNumber implementation to the container at run time so our tests continue passing with a known "random" number for the home page. (See tag 0.7.1 for details.)
+
+## Time Related Behavior
+
+Starting Tag 0.7.1
+
+We've wrapped up NF-05 and are ready to start NF-06, "As a visitor, I should see a date fact for today when I visit the home page." The acceptance criteria states "A date and associated fact for the current date are presented on the home page." Again, the team faces a testing challenge, in this case because the home page content is expected to change with the date. The team realizes that testing will require always knowing what today is. We'll be using the PHP Carbon library for date functions and Carbon provides methods for exactly this scenario.
+
+By using Carbon's setTestNow method, we are able to set a fixed value for the current date, enabling our tests to continue passing even as we implement the feature to show the current date's fact. The new method was added to the NumberFactFinder class as well. (Refer to tag 0.7.2 for details.)

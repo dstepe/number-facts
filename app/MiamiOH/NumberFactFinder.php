@@ -8,6 +8,8 @@
 
 namespace App\MiamiOH;
 
+use Carbon\Carbon;
+
 class NumberFactFinder
 {
     /**
@@ -46,5 +48,17 @@ class NumberFactFinder
         $fact = $this->repository->lookupNumberMathFact($number);
 
         return new NumberFactInteger($number, $fact->text());
+    }
+
+    public function findCurrentDateFact(): NumberFact
+    {
+        $today = Carbon::now();
+
+        $day = $today->day;
+        $month = $today->month;
+
+        $fact = $this->repository->lookupDateFact($day, $month);
+
+        return new NumberFactDate($day, $month, $fact->text());
     }
 }

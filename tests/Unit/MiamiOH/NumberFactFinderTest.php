@@ -13,6 +13,7 @@ use App\MiamiOH\NumberFactDataTransferObject;
 use App\MiamiOH\NumberFactFinder;
 use App\MiamiOH\RandomNumberEnv;
 use App\MiamiOH\Repository;
+use Carbon\Carbon;
 use PHPUnit\Framework\MockObject\MockObject;
 use Tests\TestCase;
 
@@ -120,6 +121,33 @@ class NumberFactFinderTest extends TestCase
             ]));
 
         $fact = $this->finder->findRandomIntegerFact();
+
+        $this->assertInstanceOf(NumberFact::class, $fact);
+        $this->assertEquals($number, $fact->number());
+        $this->assertEquals($factString, $fact->string());
+    }
+
+    public function testFindsFactForCurrentDate(): void
+    {
+        $day = 15;
+        $month = 10;
+
+        Carbon::setTestNow(Carbon::createFromDate((int) date('Y'), $month, $day));
+
+        $dayOfYear = 288;
+        $number = 'October 15';
+        $factString = 'October 15 is a good day.';
+
+        $this->repository
+            ->expects($this->once())
+            ->method('lookupDateFact')
+            ->with($this->equalTo($day), $this->equalTo($month))
+            ->willReturn($this->newFactDataTransferObject([
+                'number' => $dayOfYear,
+                'text' => $factString,
+            ]));
+
+        $fact = $this->finder->findCurrentDateFact();
 
         $this->assertInstanceOf(NumberFact::class, $fact);
         $this->assertEquals($number, $fact->number());

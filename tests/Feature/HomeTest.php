@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Carbon\Carbon;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -18,6 +19,11 @@ class HomeTest extends TestCase
 
     public function testShowsDateAndFact()
     {
+        $day = 15;
+        $month = 10;
+
+        Carbon::setTestNow(Carbon::createFromDate((int) date('Y'), $month, $day));
+
         $response = $this->get('/');
 
         $response->assertStatus(200);
