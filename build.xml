@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <project name="NumberFacts">
 
-    <property name="release_file" value="${package}-${version}-${release}.${build}"/>
+    <property name="release_file" value="${package}-${version}"/>
     <property name="builddir" value="${basedir}/build"/>
     <property name="composer" value="${builddir}/composer.phar"/>
 

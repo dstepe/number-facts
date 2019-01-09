@@ -3,13 +3,13 @@
 %define      app_directory numberfacts
 
 Name:        miamioh-php-numberfacts
-Version:     1.0.0
+Version:     %{_version}
 Summary:     NumberFacts application in Laravel
 URL:         https://git.itapps.miamioh.edu/solution-delivery-dev/numberfacts
 
 License:     Freely redistributable without restriction
-Release:     1.%{_build}.%{_commit}%{?dist}
-Source0:     %{name}-%{version}-%{_release}.%{_build}.tar.gz
+Release:     1%{?dist}
+Source0:     %{name}-%{_version}.tar.gz
 BuildRoot:   %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 BuildArch:   x86_64
 
