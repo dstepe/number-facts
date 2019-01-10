@@ -7,6 +7,11 @@ include:
   - 'https://git.itapps.miamioh.edu/solution-delivery-dev/gitlab-ci-includes/raw/1.0/php/php-unit.yaml'
   - 'https://git.itapps.miamioh.edu/solution-delivery-dev/gitlab-ci-includes/raw/1.0/php/php-analysis.yaml'
   - 'https://git.itapps.miamioh.edu/solution-delivery-dev/gitlab-ci-includes/raw/1.0/php/php-feature.yaml'
+
+  - 'https://git.itapps.miamioh.edu/solution-delivery-dev/gitlab-ci-includes/raw/1.0/php/php-unit-7.2.yaml'
+  - 'https://git.itapps.miamioh.edu/solution-delivery-dev/gitlab-ci-includes/raw/1.0/php/php-analysis-7.2.yaml'
+  - 'https://git.itapps.miamioh.edu/solution-delivery-dev/gitlab-ci-includes/raw/1.0/php/php-feature-7.2.yaml'
+
   # Run the php code quality assessment (coverage and CRAP score)
   - 'https://git.itapps.miamioh.edu/solution-delivery-dev/gitlab-ci-includes/raw/1.0/php/php-quality.yaml'
   # Include jobs to build and deploy the RPM
