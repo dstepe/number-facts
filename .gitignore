@@ -11,3 +11,9 @@ npm-debug.log
 yarn-error.log
 .idea
 .php_cs.cache
+
+docker/logs
+!docker/logs/.gitkeep
+
+docker/database/data
+!docker/database/data/.gitkeep

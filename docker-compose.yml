@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  php-fpm:
+    image: miamioh/php:7.3-fpm
+    volumes:
+      - .:/usr/share/nginx/app
+      - ./docker/php/conf/php.ini:/usr/local/etc/php/php.ini:ro
+
+  nginx:
+    image: miamioh/service:laravel-dev
+    volumes:
+      - .:/usr/share/nginx/app:ro
+      - ./docker/logs/nginx:/var/log/nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - php-fpm
