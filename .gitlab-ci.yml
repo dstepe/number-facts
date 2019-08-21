@@ -1,14 +1,55 @@
-include:
-  # Include the templates for php jobs
-  - 'https://git.itapps.miamioh.edu/operations/gitlab-ci-includes/raw/1.0/php/php-job-templates.yaml'
-  # Set up the standard Laravel pipeline
-  - 'https://git.itapps.miamioh.edu/operations/gitlab-ci-includes/raw/1.0/php/laravel-pipeline.yaml'
-  # Include unit testing, analysis and feature testing jobs
-  - 'https://git.itapps.miamioh.edu/operations/gitlab-ci-includes/raw/1.0/php/php-unit.yaml'
-  - 'https://git.itapps.miamioh.edu/operations/gitlab-ci-includes/raw/1.0/php/php-analysis.yaml'
-  - 'https://git.itapps.miamioh.edu/operations/gitlab-ci-includes/raw/1.0/php/php-feature.yaml'
-  # Run the php code quality assessment (coverage and CRAP score)
-  - 'https://git.itapps.miamioh.edu/operations/gitlab-ci-includes/raw/1.0/php/php-quality.yaml'
-  # Include jobs to build and deploy the RPM
-  - 'https://git.itapps.miamioh.edu/operations/gitlab-ci-includes/raw/1.0/deploy/rpm.yaml'
-  - 'https://git.itapps.miamioh.edu/operations/gitlab-ci-includes/raw/1.0/deploy/puppet.yaml'
+variables:
+  UNIT_TESTS_PATH: tests/Unit
+  FEATURE_TESTS_PATH: tests/Feature
+  MINIMUM_COVERAGE_PERCENT: 85
+  MAXIMUM_CRAP_SCORE: 30
+
+stages:
+  - test
+  - analyze
+  - review
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - vendor/
+
+before_script:
+  - composer install --quiet
+
+unit:
+  stage: test
+  image: miamioh/php:7.3-phpunit
+  except:
+    - test
+    - production
+  script:
+    - run $UNIT_TESTS_PATH
+
+coverage:
+  stage: analyze
+  image: miamioh/php:7.3-phpunit-coverage
+  script:
+    - run $UNIT_TESTS_PATH
+  artifacts:
+    paths:
+      - coverage
+      - clover.xml
+    reports:
+      junit: coverage/phpunit.junit.xml
+    expire_in: 1 week
+  except:
+    - test
+    - production
+
+quality:
+  stage: review
+  image: miamioh/php:coverage
+  script:
+    - run -p $MINIMUM_COVERAGE_PERCENT -s $MAXIMUM_CRAP_SCORE
+  dependencies:
+    - coverage
+  except:
+    - test
+    - production
+
