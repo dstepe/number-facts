@@ -1,6 +1,16 @@
 version: '3'
 
 services:
+  mariadb:
+    image: mariadb:latest
+    volumes:
+      - ./docker/database/init:/docker-entrypoint-initdb.d
+      - ./docker/database/data:/var/lib/mysql
+    ports:
+      - "${DB_HOST_PORT:-3306}:${DB_PORT:-3306}"
+    environment:
+      - MYSQL_ROOT_PASSWORD=docker
+
   php-fpm:
     image: miamioh/php:7.3-fpm
     volumes:
@@ -17,3 +27,4 @@ services:
       - "443:443"
     depends_on:
       - php-fpm
+      - mariadb

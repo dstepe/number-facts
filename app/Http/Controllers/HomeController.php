@@ -24,6 +24,8 @@ class HomeController extends Controller
         $numberFact = $this->factFinder->findRandomIntegerFact();
         $dateFact = $this->factFinder->findCurrentDateFact();
 
+        $this->recordFact($numberFact);
+
         return view('home', compact('numberFact', 'dateFact'));
     }
 }
