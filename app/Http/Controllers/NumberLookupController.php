@@ -30,6 +30,8 @@ class NumberLookupController extends Controller
 
         $numberFact = $this->factFinder->findByInteger($number);
 
+        $this->recordFact($numberFact);
+
         return view('number-lookup', compact('numberFact'));
     }
 }
