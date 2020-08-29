@@ -8,9 +8,14 @@ use App\MiamiOH\RandomNumberPhp;
 use App\MiamiOH\Repository;
 use App\MiamiOH\RepositoryRest;
 use App\MiamiOH\RepositoryYaml;
+use Barryvdh\Debugbar\Facade as DebugBar;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
+use Nipwaayoni\AgentBuilder;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -46,5 +51,20 @@ class AppServiceProvider extends ServiceProvider
         }
 
         $this->app->instance(RandomNumber::class, $randomNumber);
+
+        $this->app->bind(AgentBuilder::class, function () {
+            $builder = new AgentBuilder();
+
+            $builder->withPreCommitCallback(function (RequestInterface $request) {
+                Log::info(sprintf('Pre commit url is: %s', $request->getUri()));
+            });
+
+            $builder->withPostCommitCallback(function (ResponseInterface $response) {
+                Log::info(sprintf('Post commit response status: %s', $response->getStatusCode()));
+                Log::debug($response->getBody()->getContents());
+            });
+
+            return $builder;
+        });
     }
 }

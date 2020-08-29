@@ -11,13 +11,14 @@
         "php": "^7.2.5",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
-        "guzzlehttp/guzzle": "^6.3",
+        "http-interop/http-factory-guzzle": "^1.0",
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
-        "nipwaayoni/elastic-apm-laravel": "dev-update-dependencies",
-        "nipwaayoni/elastic-apm-php-agent": "dev-span-fixes as dev-master"
+        "nipwaayoni/elastic-apm-laravel": "^7.2",
+        "php-http/guzzle6-adapter": "^2.0"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.3",
         "facade/ignition": "^2.0",
         "fzaninotto/faker": "^1.9.1",
         "mockery/mockery": "^1.3.1",

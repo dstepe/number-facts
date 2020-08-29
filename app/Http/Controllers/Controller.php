@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class Controller extends BaseController
 {
@@ -18,5 +19,7 @@ class Controller extends BaseController
         DB::table('facts')->insert([
             'number' => $fact->number(), 'fact' => $fact->string()
         ]);
+
+//        Log::info(sprintf('Logged number %s with fact %s', $fact->number(), $fact->string()));
     }
 }

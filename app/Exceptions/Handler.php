@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Nipwaayoni\ElasticApmLaravel\Facades\ElasticApm;
 
 class Handler extends ExceptionHandler
 {
@@ -35,6 +36,8 @@ class Handler extends ExceptionHandler
      */
     public function report(\Throwable $exception)
     {
+        ElasticApm::captureThrowable($exception);
+
         parent::report($exception);
     }
 
