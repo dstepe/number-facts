@@ -18,3 +18,5 @@ Route::post('/number-lookup', 'NumberLookupController@lookup');
 
 Route::get('/date-lookup', 'DateLookupController@index')->name('date-lookup');
 Route::post('/date-lookup', 'DateLookupController@lookup');
+
+Route::get('/number-lookup/{number}', 'NumberLookupController@index');

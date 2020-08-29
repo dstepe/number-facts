@@ -22,9 +22,11 @@ class HomeController extends Controller
     public function index()
     {
         $numberFact = $this->factFinder->findRandomIntegerFact();
+        $this->recordFact($numberFact);
+
         $dateFact = $this->factFinder->findCurrentDateFact();
 
-        $this->recordFact($numberFact);
+        $this->recordFact($dateFact);
 
         return view('home', compact('numberFact', 'dateFact'));
     }

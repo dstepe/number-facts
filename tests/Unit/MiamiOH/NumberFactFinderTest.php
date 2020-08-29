@@ -14,6 +14,7 @@ use App\MiamiOH\NumberFactFinder;
 use App\MiamiOH\RandomNumberEnv;
 use App\MiamiOH\Repository;
 use Carbon\Carbon;
+use Nipwaayoni\ElasticApmLaravel\Apm\SpanMaker;
 use PHPUnit\Framework\MockObject\MockObject;
 use Tests\TestCase;
 
@@ -30,8 +31,9 @@ class NumberFactFinderTest extends TestCase
         parent::setUp();
 
         $this->repository = $this->createMock(Repository::class);
+        $spanMaker = $this->createMock(SpanMaker::class);
 
-        $this->finder = new NumberFactFinder($this->repository, new RandomNumberEnv());
+        $this->finder = new NumberFactFinder($this->repository, new RandomNumberEnv(), $spanMaker);
     }
 
     /** @dataProvider integerFactProvider */
