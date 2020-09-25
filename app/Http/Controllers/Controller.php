@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\ProcessNumberFact;
 use App\MiamiOH\NumberFact;
+use Composer\XdebugHandler\Process;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -19,6 +21,8 @@ class Controller extends BaseController
         DB::table('facts')->insert([
             'number' => $fact->number(), 'fact' => $fact->string()
         ]);
+
+        ProcessNumberFact::dispatch($fact);
 
 //        Log::info(sprintf('Logged number %s with fact %s', $fact->number(), $fact->string()));
     }
