@@ -9,6 +9,9 @@ use App\MiamiOH\RandomNumberPhp;
 use App\MiamiOH\Repository;
 use App\MiamiOH\RepositoryRest;
 use App\MiamiOH\RepositoryYaml;
+use App\MiamiOH\StatApiClient;
+use App\MiamiOH\StatApiClientNull;
+use App\MiamiOH\StatApiClientRest;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
@@ -46,11 +49,17 @@ class AppServiceProvider extends ServiceProvider
 
         if (App::runningUnitTests()) {
             $randomNumber = new RandomNumberEnv();
+            $statApiClient = new StatApiClientNull();
         } else {
             $randomNumber = new RandomNumberPhp();
+            $statApiClient = new StatApiClientRest(new Client([
+                'base_uri' => 'https://nginx',
+                'verify' => false,
+            ]));
         }
 
         $this->app->instance(RandomNumber::class, $randomNumber);
+        $this->app->instance(StatApiClient::class, $statApiClient);
 
         $this->app->bind(AgentBuilder::class, function () {
             $builder = new AgentBuilder();

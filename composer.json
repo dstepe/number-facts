@@ -9,14 +9,15 @@
     "license": "MIT",
     "require": {
         "php": "^7.2.5",
-        "arkaitzgarro/elastic-apm-laravel": "dev-chore/migrate-php-agent",
+        "arkaitzgarro/elastic-apm-laravel": "^1.5",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
         "http-interop/http-factory-guzzle": "^1.0",
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
         "nipwaayoni/elastic-apm-php-agent": "^7.4",
-        "php-http/guzzle6-adapter": "^2.0"
+        "php-http/guzzle6-adapter": "^2.0",
+        "ext-json": "*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.3",

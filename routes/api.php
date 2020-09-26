@@ -16,3 +16,6 @@ use Illuminate\Http\Request;
 Route::get('number/{number}', function($number) {
     return ['number' => $number];
 });
+
+Route::put('stats', 'StatsController@store');
+Route::get('stats/{source}', 'StatsController@show');
