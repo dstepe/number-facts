@@ -5,13 +5,11 @@ namespace App\Http\Controllers;
 use App\Jobs\ProcessNumberFact;
 use App\MiamiOH\NumberFact;
 use App\MiamiOH\StatApiClient;
-use Composer\XdebugHandler\Process;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class Controller extends BaseController
 {
