@@ -20,6 +20,7 @@
 
         @if (!empty($numberFact))
             @include('partials.numberfact', ['type' => 'number', 'numberFact' => $numberFact])
+            <p>Served {{$numberCount}} times.</p>
         @endif
     </div>
 

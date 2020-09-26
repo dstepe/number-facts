@@ -32,6 +32,9 @@ class NumberLookupController extends Controller
 
         $this->recordFact($numberFact);
 
-        return view('number-lookup', compact('numberFact'));
+        $this->incrementCountForSource($numberFact->number());
+        $numberCount = $this->getCountForSource($numberFact->number());
+
+        return view('number-lookup', compact('numberFact', 'numberCount'));
     }
 }
