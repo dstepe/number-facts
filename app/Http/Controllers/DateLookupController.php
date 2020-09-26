@@ -31,6 +31,9 @@ class DateLookupController extends Controller
 
         $dateFact = $this->factFinder->findByDayAndMonth($day, $month);
 
-        return view('date-lookup', compact('dateFact'));
+        $this->incrementCountForSource($dateFact->number());
+        $dateCount = $this->getCountForSource($dateFact->number());
+
+        return view('date-lookup', compact('dateFact', 'dateCount'));
     }
 }
