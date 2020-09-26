@@ -16,6 +16,7 @@ class StatsController extends Controller
     {
         $this->stats = $stats;
     }
+
     /**
      * Store a newly created resource in storage.
      *

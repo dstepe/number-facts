@@ -4,6 +4,7 @@
 namespace App\MiamiOH;
 
 
+use AG\ElasticApmLaravel\Agent;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 
@@ -21,10 +22,17 @@ class StatApiClientRest implements StatApiClient
 
     public function incrementCount(string $source): void
     {
+        /** @var Agent $agent */
+        $agent = resolve(Agent::class);
+        $transaction = $agent->currentTransaction();
+
         $request = new Request(
             'PUT',
             '/api/stats',
-            ['Content-Type' => 'application/json'],
+            [
+                'Content-Type' => 'application/json',
+                'ELASTIC-APM-TRACEPARENT' => $transaction->getDistributedTracing(),
+            ],
             json_encode(['source' => $source])
         );
 
@@ -33,10 +41,17 @@ class StatApiClientRest implements StatApiClient
 
     public function getCount(string $source): int
     {
+        /** @var Agent $agent */
+        $agent = resolve(Agent::class);
+        $transaction = $agent->currentTransaction();
+
         $request = new Request(
             'GET',
             '/api/stats/' . $source,
-            ['Content-Type' => 'application/json']
+            [
+                'Content-Type' => 'application/json',
+                'ELASTIC-APM-TRACEPARENT' => $transaction->getDistributedTracing(),
+            ]
         );
 
         $response = $this->client->send($request);
