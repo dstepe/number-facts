@@ -24,10 +24,16 @@ class HomeController extends Controller
         $numberFact = $this->factFinder->findRandomIntegerFact();
         $this->recordFact($numberFact);
 
+        $this->incrementCountForSource($numberFact->number());
+        $numberCount = $this->getCountForSource($numberFact->number());
+
         $dateFact = $this->factFinder->findCurrentDateFact();
 
         $this->recordFact($dateFact);
 
-        return view('home', compact('numberFact', 'dateFact'));
+        $this->incrementCountForSource($dateFact->number());
+        $dateCount = $this->getCountForSource($dateFact->number());
+
+        return view('home', compact('numberFact', 'dateFact', 'numberCount', 'dateCount'));
     }
 }

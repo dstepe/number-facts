@@ -16,6 +16,7 @@ services:
     volumes:
       - .:/usr/share/nginx/app
       - ./docker/php/conf/php.ini:/usr/local/etc/php/php.ini:ro
+    working_dir: /usr/share/nginx/app
 
   nginx:
     image: miamioh/service:laravel-dev
