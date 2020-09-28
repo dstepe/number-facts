@@ -15,7 +15,7 @@
         "http-interop/http-factory-guzzle": "^1.0",
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
-        "nipwaayoni/elastic-apm-php-agent": "^7.4",
+        "nipwaayoni/elastic-apm-php-agent": "^7.5",
         "php-http/guzzle6-adapter": "^2.0",
         "ext-json": "*"
     },
