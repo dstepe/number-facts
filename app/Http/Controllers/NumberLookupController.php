@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\MiamiOH\NumberFactDate;
 use App\MiamiOH\NumberFactFinder;
-use App\MiamiOH\NumberFactInteger;
 use Illuminate\Http\Request;
 
 class NumberLookupController extends Controller
