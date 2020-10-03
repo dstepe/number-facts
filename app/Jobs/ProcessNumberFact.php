@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\MiamiOH\NumberFact;
+use App\MiamiOH\StatApiClient;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -36,7 +37,12 @@ class ProcessNumberFact implements ShouldQueue
      */
     public function handle()
     {
-        Log::debug(sprintf('Processed fact for %s: %s', $this->fact->number(), $this->fact->string()));
+        /** @var StatApiClient $client */
+        $client = resolve(StatApiClient::class);
+
+        $count = $client->getCount($this->fact->string());
+
+        Log::debug(sprintf('Processed fact for %s: %s (served %s times)', $this->fact->number(), $this->fact->string(), $count));
     }
 
     public function middleware()
