@@ -41,7 +41,9 @@ class Stats
      */
     public function get(string $source): int
     {
-        return DB::table('stats')->where('source', '=', $source)->value('count');
+        $count = DB::table('stats')->where('source', '=', $source)->value('count');
+
+        return $count ?? 1;
     }
 
     public function incrementCount(string $source): void

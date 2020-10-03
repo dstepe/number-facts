@@ -24,6 +24,7 @@ class StatApiClientRest implements StatApiClient
     {
         /** @var Agent $agent */
         $agent = resolve(Agent::class);
+
         $transaction = $agent->currentTransaction();
 
         $request = new Request(
@@ -31,10 +32,11 @@ class StatApiClientRest implements StatApiClient
             '/api/stats',
             [
                 'Content-Type' => 'application/json',
-                'ELASTIC-APM-TRACEPARENT' => $transaction->getDistributedTracing(),
             ],
             json_encode(['source' => $source])
         );
+
+        $request = $transaction->addTraceHeaderToRequest($request);
 
         $this->client->send($request);
     }
@@ -43,6 +45,7 @@ class StatApiClientRest implements StatApiClient
     {
         /** @var Agent $agent */
         $agent = resolve(Agent::class);
+
         $transaction = $agent->currentTransaction();
 
         $request = new Request(
@@ -50,9 +53,10 @@ class StatApiClientRest implements StatApiClient
             '/api/stats/' . $source,
             [
                 'Content-Type' => 'application/json',
-                'ELASTIC-APM-TRACEPARENT' => $transaction->getDistributedTracing(),
             ]
         );
+
+        $request = $transaction->addTraceHeaderToRequest($request);
 
         $response = $this->client->send($request);
 
