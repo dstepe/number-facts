@@ -52,6 +52,6 @@ class StatApiClientRest implements StatApiClient
 
         $data = json_decode($response->getBody()->getContents(), true);
 
-        return $data['count'];
+        return $data['count'] ?? 0;
     }
 }

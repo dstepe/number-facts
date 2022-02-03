@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\LogMessage;
 use App\MiamiOH\NumberFactFinder;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -18,6 +20,8 @@ class HomeController extends Controller
 
     public function index()
     {
+        LogMessage::dispatchNow(sprintf('DispatchNow presented facts on %s', Carbon::now()->toDateTimeString()));
+
         $numberFact = $this->factFinder->findRandomIntegerFact();
         $this->recordFact($numberFact);
 

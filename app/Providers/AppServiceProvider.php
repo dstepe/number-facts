@@ -65,30 +65,32 @@ class AppServiceProvider extends ServiceProvider
         $this->app->instance(RandomNumber::class, $randomNumber);
         $this->app->instance(StatApiClient::class, $statApiClient);
 
-//        $this->app->bind(AgentBuilder::class, function () {
-//            $builder = new AgentBuilder();
-//
-//            $builder->withPreCommitCallback(function (RequestInterface $request) {
-//                Log::info(sprintf('Pre commit url is: %s', $request->getUri()), ['request' => $request->getBody()->getContents()]);
-//            });
-//
-//            $builder->withPostCommitCallback(function (?ResponseInterface $response, \Throwable $e = null) {
-//                if (null === $response) {
-//                    Log::error('Failed sending to apm: ', ['exception' => $e->getMessage()]);
-//                    return;
-//                }
-//
-//                Log::info(sprintf('Post commit response status: %s', $response->getStatusCode()));
-//                Log::debug('APM response', ['content' => $response->getBody()->getContents()]);
-//
-//                if ($response->getStatusCode() === 202) {
-//                    return;
-//                }
-//
-//                Log::debug($response->getBody()->getContents());
-//            });
-//
-//            return $builder;
-//        });
+        $this->app->bind(AgentBuilder::class, function () {
+            $builder = new AgentBuilder();
+
+            $builder->withHttpClient(new \Http\Adapter\Guzzle6\Client(new Client()));
+
+            $builder->withPreCommitCallback(function (RequestInterface $request) {
+                Log::info(sprintf('Pre commit url is: %s', $request->getUri()), ['request' => $request->getBody()->getContents()]);
+            });
+
+            $builder->withPostCommitCallback(function (?ResponseInterface $response, \Throwable $e = null) {
+                if (null === $response) {
+                    Log::error('Failed sending to apm: ', ['exception' => $e->getMessage()]);
+                    return;
+                }
+
+                Log::info(sprintf('Post commit response status: %s', $response->getStatusCode()));
+                Log::debug('APM response', ['content' => $response->getBody()->getContents()]);
+
+                if ($response->getStatusCode() === 202) {
+                    return;
+                }
+
+                Log::debug($response->getBody()->getContents());
+            });
+
+            return $builder;
+        });
     }
 }

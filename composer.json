@@ -9,15 +9,14 @@
     "license": "MIT",
     "require": {
         "php": "^7.2.5",
-        "arkaitzgarro/elastic-apm-laravel": "^1.5",
+        "ext-json": "*",
+        "arkaitzgarro/elastic-apm-laravel": "@dev",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
-        "http-interop/http-factory-guzzle": "^1.0",
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
-        "nipwaayoni/elastic-apm-php-agent": "^7.5",
-        "php-http/guzzle6-adapter": "^2.0",
-        "ext-json": "*"
+        "nipwaayoni/elastic-apm-php-agent": "dev-master as 7.5.3",
+        "php-http/guzzle6-adapter": "^2.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.3",
@@ -65,8 +64,14 @@
             "@php artisan key:generate --ansi"
         ]
     },
-    "repositories": [{
-        "type": "vcs",
-        "url": "git@github.com:dstepe/elastic-apm-laravel.git"
-    }]
+    "repositories": {
+        "apm-laravel": {
+            "type": "path",
+            "url": "projects/elastic-apm-laravel"
+        },
+        "apm-agent": {
+            "type": "path",
+            "url": "projects/elastic-apm-php-agent"
+        }
+    }
 }
