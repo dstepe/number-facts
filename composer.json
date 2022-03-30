@@ -10,12 +10,12 @@
     "require": {
         "php": "^7.2.5",
         "ext-json": "*",
-        "arkaitzgarro/elastic-apm-laravel": "@dev",
+        "arkaitzgarro/elastic-apm-laravel": "^3.0.8",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
-        "laravel/framework": "^7.0",
+        "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
-        "nipwaayoni/elastic-apm-php-agent": "dev-master as 7.5.3",
+        "nipwaayoni/elastic-apm-php-agent": "^7.5.3",
         "php-http/guzzle6-adapter": "^2.0"
     },
     "require-dev": {
@@ -63,15 +63,5 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ]
-    },
-    "repositories": {
-        "apm-laravel": {
-            "type": "path",
-            "url": "projects/elastic-apm-laravel"
-        },
-        "apm-agent": {
-            "type": "path",
-            "url": "projects/elastic-apm-php-agent"
-        }
     }
 }
