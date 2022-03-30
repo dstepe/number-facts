@@ -21,6 +21,7 @@
 
         @if (!empty($dateFact))
             @include('partials.numberfact', ['type' => 'date', 'numberFact' => $dateFact])
+            <p>Served {{$dateCount}} times.</p>
         @endif
     </div>
 

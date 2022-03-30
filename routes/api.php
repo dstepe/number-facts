@@ -13,6 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('number/{number}', function($number) {
+    return ['number' => $number];
 });
+
+Route::put('stats', 'StatsController@store');
+Route::get('stats/{source}', 'StatsController@show');

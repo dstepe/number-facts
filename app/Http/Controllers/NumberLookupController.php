@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\MiamiOH\NumberFactDate;
 use App\MiamiOH\NumberFactFinder;
-use App\MiamiOH\NumberFactInteger;
 use Illuminate\Http\Request;
 
 class NumberLookupController extends Controller
@@ -30,6 +28,11 @@ class NumberLookupController extends Controller
 
         $numberFact = $this->factFinder->findByInteger($number);
 
-        return view('number-lookup', compact('numberFact'));
+        $this->recordFact($numberFact);
+
+        $this->incrementCountForSource($numberFact->number());
+        $numberCount = $this->getCountForSource($numberFact->number());
+
+        return view('number-lookup', compact('numberFact', 'numberCount'));
     }
 }

@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\MiamiOH\NumberFactDate;
+use App\Jobs\LogMessage;
 use App\MiamiOH\NumberFactFinder;
-use App\MiamiOH\NumberFactInteger;
-use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -21,9 +20,21 @@ class HomeController extends Controller
 
     public function index()
     {
+        LogMessage::dispatchNow(sprintf('DispatchNow presented facts on %s', Carbon::now()->toDateTimeString()));
+
         $numberFact = $this->factFinder->findRandomIntegerFact();
+        $this->recordFact($numberFact);
+
+        $this->incrementCountForSource($numberFact->number());
+        $numberCount = $this->getCountForSource($numberFact->number());
+
         $dateFact = $this->factFinder->findCurrentDateFact();
 
-        return view('home', compact('numberFact', 'dateFact'));
+        $this->recordFact($dateFact);
+
+        $this->incrementCountForSource($dateFact->number());
+        $dateCount = $this->getCountForSource($dateFact->number());
+
+        return view('home', compact('numberFact', 'dateFact', 'numberCount', 'dateCount'));
     }
 }

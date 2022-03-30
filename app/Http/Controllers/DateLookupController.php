@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\MiamiOH\NumberFactDate;
 use App\MiamiOH\NumberFactFinder;
-use App\MiamiOH\NumberFactInteger;
 use Illuminate\Http\Request;
 
 class DateLookupController extends Controller
@@ -31,6 +29,9 @@ class DateLookupController extends Controller
 
         $dateFact = $this->factFinder->findByDayAndMonth($day, $month);
 
-        return view('date-lookup', compact('dateFact'));
+        $this->incrementCountForSource($dateFact->number());
+        $dateCount = $this->getCountForSource($dateFact->number());
+
+        return view('date-lookup', compact('dateFact', 'dateCount'));
     }
 }
